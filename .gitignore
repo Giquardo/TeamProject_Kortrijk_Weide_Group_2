@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/csharp,azurite,dotnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=csharp,azurite,dotnetcore
 
+#appsettings
+appsettings.json
+
 ### Azurite ###
 # Azurite queue
 __queuestorage__
