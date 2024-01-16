@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=csharp,azurite,dotnetcore
 
 #appsettings
-appsettings.json
+*local.json
 
 ### Azurite ###
 # Azurite queue
