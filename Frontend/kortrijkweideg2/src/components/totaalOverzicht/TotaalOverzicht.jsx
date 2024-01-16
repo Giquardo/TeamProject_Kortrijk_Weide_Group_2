@@ -8,9 +8,7 @@ const TotaalOverzicht = () => {
     <>
       <div className="overzicht-container">
         <h1 className="overzicht-titel">Kortrijk Weide</h1>
-        <div className="image-container">
-          <img src={overzicht} alt="Overzicht" className="overzicht" />
-        </div>
+        <img className="overzicht-img" src={overzicht} alt="overzicht" />
       </div>
       <HowestCorner />
     </>
