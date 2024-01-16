@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+}
+
+.image {
+  flex-grow: 0;
+  width: 100%;
+  height: auto;
+}
+
+.pijl1,
+.pijl2 {
+  position: absolute;
+  width: 128px;
+  height: 112px;
+  left: 816px;
+  z-index: 1;
+}
+
+.pijl1 {
+  top: 304.5px;
+}
+
+.pijl2 {
+  bottom: 375px;
+}
