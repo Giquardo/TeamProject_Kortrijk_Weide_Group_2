@@ -7,6 +7,19 @@
   pointer-events: none;
 }
 
+.custom-chart .apexcharts-menu-icon {
+  fill: black !important;
+}
+
+.custom-chart .apexcharts-tooltip {
+  color: black !important;
+  background: white !important;
+}
+
+.custom-chart .apexcharts-menu {
+  color: black !important;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -14,7 +27,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

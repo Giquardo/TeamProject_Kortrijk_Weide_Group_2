@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Chart from 'react-apexcharts';
 import logo from './logo.svg';
 import './App.css';
 
@@ -8,12 +9,54 @@ function App() {
   useEffect(() => {
     fetch('http://localhost:5000/api/data')
       .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setData(data);
-      })
+      .then(data => setData(data))
       .catch(error => console.error('Error:', error));
   }, []);
+
+  const chartData = {
+    options: {
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      xaxis: {
+        categories: data ? data.map(item => item.period) : [],
+      },
+      title: {
+        text: 'Data Overview',
+        align: 'left'
+      },
+      tooltip: {
+        theme: 'dark'
+      },
+      theme: {
+        mode: 'light',
+        palette: 'palette1',
+        monochrome: {
+          enabled: false,
+          color: '#255aee',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        },
+      },
+    },
+    series: [
+      {
+        name: 'Consumption',
+        data: data ? data.map(item => item.consumption) : [],
+      },
+      {
+        name: 'Production',
+        data: data ? data.map(item => item.production) : [],
+      },
+    ],
+  };
 
   return (
     <div className="App">
@@ -22,13 +65,13 @@ function App() {
         {data ? (
           <div>
             <h1>Data from API:</h1>
-            {data.map((item) => (
-              <div key={item.period}>
-                <h2>{item.period}</h2>
-                <p>Consumption: {item.consumption}</p>
-                <p>Production: {item.production}</p>
-              </div>
-            ))}
+            <Chart
+              options={chartData.options}
+              series={chartData.series}
+              type="bar"
+              width="500"
+              className="custom-chart"
+            />
           </div>
         ) : (
           <p>Loading...</p>
