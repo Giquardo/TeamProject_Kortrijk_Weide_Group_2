@@ -1,25 +1,18 @@
 .overzicht-container {
-  /* position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: #f2f2f2;
-  padding: 0 0 0 0; */
   display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  height: 100vh;
+  width: 100%;
 }
 
-.image-container,
-.overzicht-container {
-  flex-grow: 0;
-}
-
-.overzicht-img {
+.image {
   display: flex;
   align-items: left;
-  margin: 80px 798px 200px 128px;
+  margin: 200px 798px 200px 100px;
   aspect-ratio: 1;
-  width: 100%;
+  max-width: 50%;
   height: auto;
 }
 

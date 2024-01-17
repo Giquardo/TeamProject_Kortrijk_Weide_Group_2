@@ -8,9 +8,8 @@ import arrowWater from "../../animations/arrowWater.json";
 const UitlegEnergieVermogen = () => {
   return (
     <div className="container">
-      <div className="image">
-        <img src={uitleg} alt="uitlegEnergieEnVermogen" />
-      </div>
+      <img src={uitleg} alt="uitlegEnergieEnVermogen" />
+
       <div className="pijl2">
         <Lottie animationData={arrowWater} loop={true} autoplay={true} />
       </div>

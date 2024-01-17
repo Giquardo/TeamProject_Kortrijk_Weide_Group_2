@@ -1,26 +1,34 @@
 .container {
   display: flex;
-}
-
-.image {
-  flex-grow: 0;
+  background-color: beige;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   width: 100%;
+}
+img {
+  width: 90%;
   height: auto;
+  align-items: center;
+  justify-content: center;
 }
 
 .pijl1,
 .pijl2 {
   position: absolute;
-  width: 128px;
-  height: 112px;
-  left: 816px;
-  z-index: 1;
+  flex-direction: column;
+  left: 0;
+  width: 10%;
+  height: auto;
 }
 
 .pijl1 {
-  top: 304.5px;
+  top: 55%;
+  left: 37%;
 }
 
 .pijl2 {
-  bottom: 375px;
+  top: 12.5%;
+  left: 37%;
 }
