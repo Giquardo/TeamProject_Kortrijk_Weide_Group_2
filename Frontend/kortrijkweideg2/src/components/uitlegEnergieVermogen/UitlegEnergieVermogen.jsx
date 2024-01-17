@@ -10,10 +10,10 @@ const UitlegEnergieVermogen = () => {
     <div className="container">
       <img src={uitleg} alt="uitlegEnergieEnVermogen" />
 
-      <div className="pijl2">
+      <div className="pijl1">
         <Lottie animationData={arrowWater} loop={true} autoplay={true} />
       </div>
-      <div className="pijl1">
+      <div className="pijl2">
         <Lottie animationData={arrowWater} loop={true} autoplay={true} />
       </div>
       <HowestCorner />
