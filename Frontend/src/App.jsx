@@ -14,11 +14,10 @@ function App() {
         {/* <UitlegEnergieVermogen /> */}
         {/* <Quiz /> */}
         {/* <HernieuwbareEnergieLayout /> */}
-
-        <Routes>
+        {/*<Routes>
           <Route path="/" element={<TotaalOverzicht />} />
         </Routes>
-        <Navbar />
+        <Navbar />*/}
       </header>
     </div>
   );
