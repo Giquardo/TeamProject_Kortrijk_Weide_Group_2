@@ -1,0 +1,11 @@
+Model Information:
+* title:	Beretta Px4 Storm Sub-Compact | Free Lowpoly
+* source:	https://sketchfab.com/3d-models/beretta-px4-storm-sub-compact-free-lowpoly-55958f5ee3674f5fbb1a5cb93ca84e44
+* author:	Vlasov Daniil (https://sketchfab.com/dan741vlasov)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Beretta Px4 Storm Sub-Compact | Free Lowpoly" (https://sketchfab.com/3d-models/beretta-px4-storm-sub-compact-free-lowpoly-55958f5ee3674f5fbb1a5cb93ca84e44) by Vlasov Daniil (https://sketchfab.com/dan741vlasov) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
