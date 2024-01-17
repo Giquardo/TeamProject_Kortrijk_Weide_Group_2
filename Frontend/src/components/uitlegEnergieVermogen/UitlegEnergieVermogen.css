@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  background-color: beige;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+img {
+  width: 90%;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.pijl1,
+.pijl2 {
+  position: absolute;
+  flex-direction: column;
+  left: 0;
+  width: 10%;
+  height: auto;
+}
+
+.pijl2 {
+  /* onderste pijl */
+  top: calc(50% + 5%);
+  left: calc(50% - 13%);
+  resize: both;
+}
+
+.pijl1 {
+  /*bovenste pijl*/
+  top: calc(50% - 37.5%);
+  left: calc(50% - 13%);
+  transform: translate(-05%, -05%);
+  resize: both;
+}

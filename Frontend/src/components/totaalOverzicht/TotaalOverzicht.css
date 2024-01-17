@@ -1,0 +1,44 @@
+.overzicht-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.image {
+  display: flex;
+  align-items: left;
+  margin: 200px 798px 200px 100px;
+  aspect-ratio: 1;
+  max-width: 50%;
+  height: auto;
+}
+
+.overzicht-titel {
+  position: absolute;
+  right: 0;
+  text-align: right;
+  margin: 125px 125px 0px 0px;
+  color: black;
+  font-family: "VAG Rounded Bold";
+  font-size: 99px;
+  width: 50%;
+  height: 100%;
+  padding: 0 0 0 5%;
+}
+
+@media screen and (max-width: 1024px) {
+  .overzicht-titel {
+    position: absolute;
+    right: 0;
+    text-align: center;
+    color: black;
+    font-family: "VAG Rounded Bold";
+    font-size: calc(99px * 0.5);
+    width: 50%;
+    height: 100%;
+    padding: 0 0 0 5%;
+  }
+}
