@@ -1,23 +1,15 @@
 import React from 'react';
-import { Box } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { Box, useTexture } from '@react-three/drei';
+import boxTexture from '../resources/boxTexture.jpg'; // import the texture file
 
 export default function BoxComponent() {
   const meshRef = React.useRef();
-
-  useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x += 0.01;
-      meshRef.current.rotation.y += 0.01;
-    }
-  });
+  const texture = useTexture(boxTexture); // use the imported texture
 
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[0, 10, 0]} intensity={1.5} />
       <Box args={[2, 2, 2]} ref={meshRef}>
-        <meshLambertMaterial attach="material" color="hotpink" />
+        <meshBasicMaterial attach="material" map={texture} />
       </Box>
     </>
   );
