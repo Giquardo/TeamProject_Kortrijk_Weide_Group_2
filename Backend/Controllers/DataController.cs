@@ -36,7 +36,7 @@ namespace TeamProject.Controllers
 
                 // General Overview Queries
                 var generaloverview = new Dictionary<string, (string, string)>
-                  {
+                {
                     {"Year", ($"from(bucket: \"{bucket}\") |> range(start: -90d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Afname$/)",
                                 $"from(bucket: \"{bucket}\") |> range(start: -90d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie.*/)")},
                     {"Month", ($"from(bucket: \"{bucket}\") |> range(start: -30d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Afname$/)",
