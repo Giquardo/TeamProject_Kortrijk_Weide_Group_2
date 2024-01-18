@@ -29,7 +29,7 @@ const TotaalOverzicht = () => {
         </div>
         <div className="textbox textbox3">
           Totaal Opbrengst
-          <div>{(data.totalProductie - data.totalProductieEigenVerbruik).toFixed(2)} kW</div>        
+          <div>{data.totalProductionProfit} kW</div>        
         </div>
       </div>
     </>

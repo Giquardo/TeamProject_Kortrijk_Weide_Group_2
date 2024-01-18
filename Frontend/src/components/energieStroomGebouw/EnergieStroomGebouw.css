@@ -1,0 +1,71 @@
+.energie-stroom-gebouw-container {
+  flex-direction: horizontal;
+display: flex;
+  justify-content: center;
+  align-items: left;
+  height: 100vh;
+  max-width: 100%;  
+}
+  
+.building-title {
+    text-align: center;
+    color: white;
+    font-family: "VAG Rounded";
+    font-size: 48px;
+  }
+
+  .building-image {
+  }
+
+  .building-container{
+    position: absolute;
+    z-index: 1;
+    left: 10%;
+    top: 25%;
+  }
+
+  .energiestroom-circle-container {
+    position: absolute;
+    right: 160px;
+    top: 128px;
+    display: flex;
+    flex-direction: horizontal;
+    gap: 20px;
+  }
+  
+.energiestroom-circle {
+    border: 8px solid white;
+    border-radius: 50%;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    flex-direction: column; /* Add this */
+    justify-content: center;
+    align-items: center;
+    flex-direction: horizontal;
+    margin: 24px;
+    font-family: "VAG Rounded Bold";
+    font-size: 32px;
+}
+
+.circle-variable {
+    margin-top: 10px; /* Add this */
+    font-family: "VAG Rounded Bold";
+    font-size: 40px;
+  }
+
+  .energiestroom-info-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Stack elements vertically */
+  }
+
+  .chart-container {
+    position: absolute;
+    top: 55%;
+    left: 15%;
+    width: 100%; /* Take up full width of parent */
+    display: flex;
+    justify-content: center; /* Center chart horizontally */
+  }

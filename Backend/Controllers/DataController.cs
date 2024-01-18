@@ -331,10 +331,11 @@ namespace TeamProject.Controllers
                     var data = new
                     {
                         Period = query.Key,
-                        Consumption = totalConsumption,
-                        Injection = totalInjection,
-                        TotalProductieEigenVerbruik = totalProductieEigenVerbruikWKK + totalProductieEigenVerbruikPV,
-                        TotalProductie = totalProductieWKK + totalProductiePV
+                        Consumption = totalConsumption.ToString("#,##0.00").Replace(",", "x").Replace(".", ",").Replace("x", "."),
+                        Injection = totalInjection.ToString("#,##0.00").Replace(",", "x").Replace(".", ",").Replace("x", "."),
+                        TotalProductieEigenVerbruik = (totalProductieEigenVerbruikWKK + totalProductieEigenVerbruikPV).ToString("#,##0.00").Replace(",", "x").Replace(".", ",").Replace("x", "."),
+                        TotalProductie = (totalProductieWKK + totalProductiePV).ToString("#,##0.00").Replace(",", "x").Replace(".", ",").Replace("x", "."),
+                        TotalProductionProfit = ((totalProductieWKK + totalProductiePV ) - (totalProductieEigenVerbruikWKK + totalProductieEigenVerbruikPV)).ToString("#,##0.00").Replace(",", "x").Replace(".", ",").Replace("x", ".")
                     };
 
                     results.Add(data);
@@ -363,7 +364,7 @@ namespace TeamProject.Controllers
                 using var client = InfluxDBClientFactory.Create("http://howest-energy-monitoring.westeurope.cloudapp.azure.com:8087", token);
 
                 var types = new string[] { "Injectie", "Productie", "Productie_EigenVerbruik" };
-                var totals = new Dictionary<string, double>();
+                var totals = new Dictionary<string, string>();
 
                 foreach (var type in types)
                 {
@@ -382,7 +383,7 @@ namespace TeamProject.Controllers
                     }
 
                     total = Math.Round(total, 2);
-                    totals[type] = total;
+                    totals[type] = total.ToString("#,##0.00").Replace(",", "x").Replace(".", ",").Replace("x", ".");
                 }
 
                 return Ok(new { Soort = soort, Totals = totals });

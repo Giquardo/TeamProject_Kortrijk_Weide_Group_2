@@ -7,6 +7,10 @@ import Background from "./components/background/Background.jsx";
 import TotaalOverzicht from "./components/totaalOverzicht/TotaalOverzicht.jsx";
 import EnergieVerbruikTotaalOverzicht from "./components/energieVerbruikTotaalOverzicht/EnergieVerbruikTotaalOverzicht.jsx";
 import UitlegEnergieVermogen from "./components/uitlegEnergieVermogen/UitlegEnergieVermogen.jsx";
+
+import EnergieStroomGebouw from "./components/energieStroomGebouw/EnergieStroomGebouw.jsx";
+import energieStroomGebouwInfo from "./data/energieStroomGebouwInfo.js";
+
 import Quiz from "./components/quiz/Quiz.jsx";
 import HernieuwbareEnergieLayout from "./components/hernieuwbareEnergie/HernieuwbareEnergieLayout.jsx";
 import hernieuwbareEnergieInfo from "./data/hernieuwbareEnergieInfo.js";
@@ -16,6 +20,7 @@ const routes = [
   { path: "/totaaloverzicht", element: <TotaalOverzicht /> },
   { path: "/energieverbruiktotaaloverzicht", element: <EnergieVerbruikTotaalOverzicht /> },
   { path: "/uitlegenergievermogen", element: <UitlegEnergieVermogen /> },
+  ...energieStroomGebouwInfo.map((info,index) => ({ path: `/gebouw/${index}`, element: <EnergieStroomGebouw info={info}  /> })),
   { path: "/quiz", element: <Quiz /> },
   ...hernieuwbareEnergieInfo.map((info, index) => ({ path: `/hernieuwbareenergie/${index}`, element: <HernieuwbareEnergieLayout info={info} /> })),
   { path: "/endscreen", element: <EndScreen /> }
