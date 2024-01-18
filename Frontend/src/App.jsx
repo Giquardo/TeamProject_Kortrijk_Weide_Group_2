@@ -1,15 +1,16 @@
 import "./App.css";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import Navbar from "./components/navigator/Navbar.jsx";
+import ProgressBar from './components/progressBar/ProgressBar.jsx';
+import Background from "./components/background/Background.jsx";
 import TotaalOverzicht from "./components/totaalOverzicht/TotaalOverzicht.jsx";
 import EnergieVerbruikTotaalOverzicht from "./components/energieVerbruikTotaalOverzicht/EnergieVerbruikTotaalOverzicht.jsx";
-import Quiz from "./components/quiz/Quiz.jsx";
 import UitlegEnergieVermogen from "./components/uitlegEnergieVermogen/UitlegEnergieVermogen.jsx";
-import HernieuwbareEnergieLayout from "./components/hernieuwbareEnergie/hernieuwbareEnergieLayout.jsx";
-import Navbar from "./components/navigator/Navbar.jsx";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import ProgressBar from './components/progressBar/ProgressBar.jsx';
-import React, { useEffect, useState } from 'react';
-import Background from "./components/background/Background.jsx";
+import Quiz from "./components/quiz/Quiz.jsx";
+import HernieuwbareEnergieLayout from "./components/hernieuwbareEnergie/HernieuwbareEnergieLayout.jsx";
 import hernieuwbareEnergieInfo from "./data/hernieuwbareEnergieInfo.js";
+import EndScreen from "./components/endScreen/EndScreen.jsx";
 
 const routes = [
   { path: "/totaaloverzicht", element: <TotaalOverzicht /> },
@@ -17,6 +18,7 @@ const routes = [
   { path: "/uitlegenergievermogen", element: <UitlegEnergieVermogen /> },
   { path: "/quiz", element: <Quiz /> },
   ...hernieuwbareEnergieInfo.map((info, index) => ({ path: `/hernieuwbareenergie/${index}`, element: <HernieuwbareEnergieLayout info={info} /> })),
+  { path: "/endscreen", element: <EndScreen /> }
 ];
 
 function App() {

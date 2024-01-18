@@ -351,5 +351,46 @@ namespace TeamProject.Controllers
             }
         }
 
+        [HttpGet("hernieuwbareEnergie/{soort}")]
+        public async Task<IActionResult> GetEnergieSoort(string soort)
+        {
+            try
+            {
+                string token = _configuration.GetSection("InfluxDB:Token").Value;
+                const string bucket = "Kortrijk Weide";
+                const string org = "City of Things";
+
+                using var client = InfluxDBClientFactory.Create("http://howest-energy-monitoring.westeurope.cloudapp.azure.com:8087", token);
+
+                var types = new string[] { "Injectie", "Productie", "Productie_EigenVerbruik" };
+                var totals = new Dictionary<string, double>();
+
+                foreach (var type in types)
+                {
+                    var query = $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_{type}_{soort}$/)";
+                    var tables = await client.GetQueryApi().QueryAsync(query, org);
+
+                    double total = 0;
+
+                    foreach (var table in tables)
+                    {
+                        foreach (var record in table.Records)
+                        {
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            total += value;
+                        }
+                    }
+
+                    total = Math.Round(total, 2);
+                    totals[type] = total;
+                }
+
+                return Ok(new { Soort = soort, Totals = totals });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"An error occurred: {ex.Message}" });
+            }
+        }
     }
 }

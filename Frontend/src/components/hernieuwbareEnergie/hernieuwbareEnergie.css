@@ -9,7 +9,6 @@
   left: 0;
 }
 
-
 .hernieuwbareEnergie-title {
   position: absolute;
   left: 0;
@@ -18,10 +17,10 @@
   color: black;
   font-family: "VAG Rounded Bold";
   font-size: 99px;
-  width: 50%;
+  width: 40%;
   height: 100%;
   padding: 0 0 0 5%;
-
+  word-wrap: break-word; /* Add this line */
 }
 
 .energie-image{
@@ -29,4 +28,67 @@
   max-height: 100%;
   object-fit: contain;
   z-index: 1;
+}
+
+.hernieuwbareEnergie-description {
+  position: absolute; /* Position it absolutely within the container */
+  right: 0; /* Align it to the left of the container */
+  top: 10%; /* Position it around the middle of the container, adjust as needed */
+  width: 50%; /* Take up half the width of the container */
+  color: white; /* Set the text color to white */
+  font-family: "VAG Rounded Bold"; /* Set the font */
+  font-size: 20px; /* Set the font size */
+  z-index: 2; /* Make sure it's above the image */
+  font-size: 32px;
+}
+
+.value-type, .value {
+  margin: 16px; /* Add a little space */
+  padding: 0; /* Remove padding */
+}
+
+
+.value-type{
+  color: white;
+  font-family: "VAG Rounded Bold";
+  font-size: 32px;
+}
+
+.value{
+  color: white;
+  font-family: "VAG Rounded Bold";
+  font-size: 40px;
+}
+
+.circles {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  top: 30%; /* Adjust this value as needed to position the circles underneath the description */
+  width: 50%;
+}
+
+
+.circle-container {
+  display: flex;
+  justify-content: center;
+}
+
+.circle {
+  border: 8px solid white;
+  border-radius: 50%;
+  width: 232px;
+  height: 232px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 24px;
+}
+
+.circle:last-child {
+  margin-top: auto;
 }
