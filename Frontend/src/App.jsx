@@ -1,5 +1,6 @@
 import "./App.css";
 import TotaalOverzicht from "./components/totaalOverzicht/TotaalOverzicht.jsx";
+import EnergieVerbruikTotaalOverzicht from "./components/energieVerbruikTotaalOverzicht/EnergieVerbruikTotaalOverzicht.jsx";
 import Quiz from "./components/quiz/Quiz.jsx";
 import UitlegEnergieVermogen from "./components/uitlegEnergieVermogen/UitlegEnergieVermogen.jsx";
 import HernieuwbareEnergieLayout from "./components/hernieuwbareEnergie/hernieuwbareEnergieLayout.jsx";
@@ -7,12 +8,14 @@ import Navbar from "./components/navigator/Navbar.jsx";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import ProgressBar from './components/progressBar/ProgressBar.jsx';
 import React, { useEffect, useState } from 'react';
+import Background from "./components/background/Background.jsx";
 
 const routes = [
   { path: "/totaaloverzicht", element: <TotaalOverzicht /> },
+  { path: "/energieverbruiktotaaloverzicht", element: <EnergieVerbruikTotaalOverzicht /> },
   { path: "/uitlegenergievermogen", element: <UitlegEnergieVermogen /> },
   { path: "/quiz", element: <Quiz /> },
-  { path: "/hernieuwbareenergielayout", element: <HernieuwbareEnergieLayout /> },
+  /*{ path: "/hernieuwbareenergielayout", element: <HernieuwbareEnergieLayout /> },*/
 ];
 
 function App() {
@@ -34,7 +37,7 @@ function App() {
       const currentIndex = routes.findIndex(route => route.path === location.pathname);
       const nextIndex = (currentIndex + 1) % totalNumberOfPages;
       navigate(routes[nextIndex].path);
-    }, 10000);
+    }, location.pathname === "/quiz" ? 20000 : 10000);
     return () => clearInterval(interval);
   }, [location, navigate]);
 
@@ -43,6 +46,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <Background />
         <ProgressBar progress={progress} />
         <Navbar />
         <Routes>

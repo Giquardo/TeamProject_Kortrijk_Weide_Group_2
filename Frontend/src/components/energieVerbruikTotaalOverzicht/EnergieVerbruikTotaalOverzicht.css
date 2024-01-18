@@ -11,6 +11,27 @@
   margin-top: 64px; /* Adjust this value as needed */
 }
 
+.textbox {
+  position: absolute;
+  font-family: "VAG Rounded";
+  font-size: 48px;
+}
+
+.textbox1 {
+  top: 25%;
+  left: 37.5%;
+}
+
+.textbox2 {
+  top: 75%;
+  left: 15%; 
+}
+
+.textbox3 {
+  top: 70%; 
+  left: 75%; 
+}
+
 .title {
   position: absolute;
   top: 0;

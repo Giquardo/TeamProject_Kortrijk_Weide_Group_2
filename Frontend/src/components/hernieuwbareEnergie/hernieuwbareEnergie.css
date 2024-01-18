@@ -1,6 +1,5 @@
 .container {
   display: flex;
-  background-color: beige;
   flex-direction: column;
   justify-content: center;
   align-items: center;

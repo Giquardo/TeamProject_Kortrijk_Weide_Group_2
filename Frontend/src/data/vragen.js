@@ -11,7 +11,7 @@ const vragen = [
     ],
     correctAntwoord: "a",
     verklaring: "WKK produceert elektriciteit en warmte voor gebouwen."
-  },
+  }, 
   {
     id: 2,
     vraag: "Wat is een van de voordelen van hernieuwbare energiebronnen zoals zonne-energie?",

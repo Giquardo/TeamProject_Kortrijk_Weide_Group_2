@@ -44,7 +44,7 @@ namespace TeamProject.Controllers
                     {"Day", ($"from(bucket: \"{bucket}\") |> range(start: -11d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Afname$/)",
                                 $"from(bucket: \"{bucket}\") |> range(start: -11d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie.*/)")}
                 };
-                
+
                 // Production Overview Queries
                 var productionoverview = new Dictionary<string, (string, string)>
                 {
@@ -163,7 +163,7 @@ namespace TeamProject.Controllers
                 using var client = InfluxDBClientFactory.Create("http://howest-energy-monitoring.westeurope.cloudapp.azure.com:8087", token);
 
                 // Building-Specific Queries
-               var buildingSpecificQueries = new Dictionary<string, (string, string)>
+                var buildingSpecificQueries = new Dictionary<string, (string, string)>
                 {
                     {"Year", ($"from(bucket: \"{bucket}\") |> range(start: -90d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Afname$/ and r[\"Meter_ID\"] =~ /{buildingName}/)",
                             $"from(bucket: \"{bucket}\") |> range(start: -90d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie.*/ and r[\"Meter_ID\"] =~ /{buildingName}/)")},
@@ -220,5 +220,136 @@ namespace TeamProject.Controllers
                 return BadRequest(new { message = $"An error occurred: {ex.Message}" });
             }
         }
+
+
+        [HttpGet("overview/weekly")]
+        public async Task<IActionResult> GetWeeklyOverview()
+        {
+            try
+            {
+                string token = _configuration.GetSection("InfluxDB:Token").Value;
+                const string bucket = "Kortrijk Weide";
+                const string org = "City of Things";
+
+                using var client = InfluxDBClientFactory.Create("http://howest-energy-monitoring.westeurope.cloudapp.azure.com:8087", token);
+
+                // Weekly Overview Queries
+                var weeklyoverview = new Dictionary<string, (string, string, string, string, string, string)>
+                {
+                    {"Week", ($"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Afname$/)",
+                                $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Injectie$/)",
+                                $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_EigenVerbruik_WKK$/)",
+                                $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_EigenVerbruik_PV$/)",
+                                $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_WKK$/)",
+                                $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_PV$/)")
+                    }
+                };
+
+                var results = new List<object>();
+
+                // Weekly Overview
+                foreach (var query in weeklyoverview)
+                {
+                    // Fetch and calculate the total for each variable
+                    var kortrijkWeideTablesProductieEigenVerbruikWKK = await client.GetQueryApi().QueryAsync(query.Value.Item3, org);
+                    var kortrijkWeideTablesProductieEigenVerbruikPV = await client.GetQueryApi().QueryAsync(query.Value.Item4, org);
+                    var kortrijkWeideTablesProductieWKK = await client.GetQueryApi().QueryAsync(query.Value.Item5, org);
+                    var kortrijkWeideTablesProductiePV = await client.GetQueryApi().QueryAsync(query.Value.Item6, org);
+                    var kortrijkWeideTablesConsumption = await client.GetQueryApi().QueryAsync(query.Value.Item1, org);
+                    var kortrijkWeideTablesInjection = await client.GetQueryApi().QueryAsync(query.Value.Item2, org);
+
+                    double totalConsumption = 0;
+                    double totalInjection = 0;
+                    double totalProductieEigenVerbruikWKK = 0;
+                    double totalProductieEigenVerbruikPV = 0;
+                    double totalProductieWKK = 0;
+                    double totalProductiePV = 0;
+
+                    // Calculate the total for each variable
+                    foreach (var table in kortrijkWeideTablesProductieEigenVerbruikWKK)
+                    {
+                        foreach (var record in table.Records)
+                        {
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            totalProductieEigenVerbruikWKK += value;
+                        }
+                    }
+
+                    foreach (var table in kortrijkWeideTablesProductieEigenVerbruikPV)
+                    {
+                        foreach (var record in table.Records)
+                        {
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            totalProductieEigenVerbruikPV += value;
+                        }
+                    }
+
+                    foreach (var table in kortrijkWeideTablesProductieWKK)
+                    {
+                        foreach (var record in table.Records)
+                        {
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            totalProductieWKK += value;
+                        }
+                    }
+
+                    foreach (var table in kortrijkWeideTablesProductiePV)
+                    {
+                        foreach (var record in table.Records)
+                        {
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            totalProductiePV += value;
+                        }
+                    }
+
+                    foreach (var table in kortrijkWeideTablesConsumption)
+                    {
+                        foreach (var record in table.Records)
+                        {
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            totalConsumption += value;
+                        }
+                    }
+
+                    foreach (var table in kortrijkWeideTablesInjection)
+                    {
+                        foreach (var record in table.Records)
+                        {
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            totalInjection += value;
+                        }
+                    }
+
+                    totalConsumption = Math.Round(totalConsumption, 2);
+                    totalInjection = Math.Round(totalInjection, 2);
+                    totalProductieEigenVerbruikWKK = Math.Round(totalProductieEigenVerbruikWKK, 2);
+                    totalProductieEigenVerbruikPV = Math.Round(totalProductieEigenVerbruikPV, 2);
+                    totalProductieWKK = Math.Round(totalProductieWKK, 2);
+                    totalProductiePV = Math.Round(totalProductiePV, 2);
+
+                    // Add the totals to the data object
+                    var data = new
+                    {
+                        Period = query.Key,
+                        Consumption = totalConsumption,
+                        Injection = totalInjection,
+                        TotalProductieEigenVerbruik = totalProductieEigenVerbruikWKK + totalProductieEigenVerbruikPV,
+                        TotalProductie = totalProductieWKK + totalProductiePV
+                    };
+
+                    results.Add(data);
+                }
+
+                return Ok(new
+                {
+                    weeklyoverview = results
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"An error occurred: {ex.Message}" });
+            }
+        }
+
     }
 }

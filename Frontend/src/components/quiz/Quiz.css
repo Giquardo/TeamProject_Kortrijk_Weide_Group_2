@@ -4,20 +4,8 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
-.vraag {
-  position: absolute;
-  top: 0;
-  left: 0;
-  text-align: center;
-  margin: 125px 125px 0px 0px;
-  color: black;
-  font-family: "VAG Rounded Bold";
-  font-size: 70px;
-  width: 50%;
-  height: 100%;
-  padding: 0 0 0 5%;
+  max-width: 100%; 
+  
 }
 
 .timer {
@@ -29,16 +17,40 @@
   padding: 0 5% 0 0;
 }
 
+.vraag {
+  position: relative;
+  text-align: left;
+  font-size: 70px;
+  max-width: 65%;
+}
+
 .antwoord {
+  position: relative;
+  text-align: left;
+  font-size: 40px;
+  margin-left: 10%;
+}
+
+.wrong-answer {
+  position: relative;
+  text-align: left;
+  color: grey;
+  text-decoration: line-through;
+  font-size: 24px;
+}
+
+.text-content {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  text-align: center;
-  margin: 0px 125px 125px 0px;
+  top: 0;
+  text-align: left;
   color: black;
   font-family: "VAG Rounded Bold";
-  font-size: 70px;
-  width: 50%;
-  height: 100%;
-  padding: 0 0 0 5%;
+  font-size: 40px;
+  margin-left: 20%;  
+  max-width: 100%; 
+}
+
+.verklaring {
+  
+  width: 100%; 
 }

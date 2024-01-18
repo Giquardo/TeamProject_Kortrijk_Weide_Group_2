@@ -1,40 +1,58 @@
-.container {
+.uitleg-container {
+  position: fixed; 
   display: flex;
-  background-color: beige;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   width: 100%;
-}
-
-img {
-  width: 90%;
-  height: auto;
-  align-items: center;
-  justify-content: center;
-}
-
-.pijl1,
-.pijl2 {
-  position: absolute;
-  flex-direction: column;
+  height: 100%;
+  top: 0;
   left: 0;
-  width: 10%;
-  height: auto;
 }
 
-.pijl2 {
-  /* onderste pijl */
-  top: calc(50% + 5%);
-  left: calc(50% - 13%);
-  resize: both;
+.uitleg-image {
+  min-width: 100%;
+  min-height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
 }
 
-.pijl1 {
-  /*bovenste pijl*/
-  top: calc(50% - 37.5%);
-  left: calc(50% - 13%);
-  transform: translate(-05%, -05%);
-  resize: both;
+.uitleg-text{
+  position: absolute;
+  color: white;
+  font-family: "VAG Rounded";
+  font-size: 32px;
+}
+
+.uitleg-text1{
+  top: 25%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+}
+
+.uitleg-text2{
+  top: 45%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+}
+
+.uitleg-text1::before{
+  content: "";
+  position: absolute;
+  width: 564px; /* Adjust as needed */
+  height: 2px; /* Adjust as needed */
+  background-color: white;
+  top: 50%;
+  left: -572px; /* Adjust as needed */
+}
+
+.uitleg-text2::before{
+  content: "";
+  position: absolute;
+  width: 504px; /* Adjust as needed */
+  height: 2px; /* Adjust as needed */
+  background-color: white;
+  top: 50%;
+  left: -512px; /* Adjust as needed */
 }
