@@ -5,9 +5,9 @@ import overzicht from "../../Images/TotaalOverzicht.png";
 const TotaalOverzicht = () => {
   return (
     <>
-      <h1 className="title">Energie Verbruik Kortrijk Weide</h1>
-      <div className="overzicht-container">
-        <img className="image" src={overzicht} alt="overzicht" />
+      <h1 className="totaalOverzicht-title">Energie Verbruik Kortrijk Weide</h1>
+      <div className="totaalOverzicht-container">
+        <img className="totaalOverzicht-image" src={overzicht} alt="overzicht" />
       </div>
     </>
   );

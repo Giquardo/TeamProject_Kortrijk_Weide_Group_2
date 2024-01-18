@@ -1,18 +1,21 @@
-.overzicht-container {
-  position: relative; 
+.totaalOverzicht-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  max-width: 100%;  
 }
 
-.image {
-  width: 85%;
-  position: relative;
-  margin-top: 64px; /* Adjust this value as needed */
+.totaalOverzicht-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover; 
+  z-index: 0;
 }
 
-.title {
-  position: absolute;
+.totaalOverzicht-title{
+position: absolute;
   top: 0;
   left: 64px;
   text-align: left;
@@ -21,4 +24,6 @@
   font-size: 96px;
   z-index: 1;
 }
+
+
 

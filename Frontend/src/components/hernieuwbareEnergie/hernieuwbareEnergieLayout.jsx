@@ -1,13 +1,13 @@
 import React from "react";
 import "./hernieuwbareEnergie.css";
-import zonneEnergie from "../../Images/zonneEnergie.jpg";
+import zonneEnergie from "../../Images/zonneEnergie.png";
 
-const HernieuwbareEnergieLayout = () => {
+const HernieuwbareEnergieLayout = ({ info }) => {
   return (
     <>
-      <div className="container">
-        <h1 className="titel">Zonne energie</h1>
-        <img className="image" src={zonneEnergie} alt="zonneEnergie" />
+      <div className="hernieuwbareEnergie-container">
+        <h1 className="hernieuwbareEnergie-title">{info.title}</h1>
+        <img className="energie-image" src={zonneEnergie} alt="zonneEnergie" />
       </div>
     </>
   );

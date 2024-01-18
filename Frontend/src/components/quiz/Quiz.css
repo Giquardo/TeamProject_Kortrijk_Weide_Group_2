@@ -4,8 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  max-width: 100%; 
-  
+  max-width: 100%;  
 }
 
 .timer {
@@ -48,6 +47,8 @@
   font-size: 40px;
   margin-left: 20%;  
   max-width: 100%; 
+  word-wrap: break-word; /* This will break the word to next line */
+  overflow-wrap: break-word; /* This will break the word to next line */
 }
 
 .verklaring {

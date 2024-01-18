@@ -9,13 +9,14 @@ import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import ProgressBar from './components/progressBar/ProgressBar.jsx';
 import React, { useEffect, useState } from 'react';
 import Background from "./components/background/Background.jsx";
+import hernieuwbareEnergieInfo from "./data/hernieuwbareEnergieInfo.js";
 
 const routes = [
   { path: "/totaaloverzicht", element: <TotaalOverzicht /> },
   { path: "/energieverbruiktotaaloverzicht", element: <EnergieVerbruikTotaalOverzicht /> },
   { path: "/uitlegenergievermogen", element: <UitlegEnergieVermogen /> },
   { path: "/quiz", element: <Quiz /> },
-  /*{ path: "/hernieuwbareenergielayout", element: <HernieuwbareEnergieLayout /> },*/
+  ...hernieuwbareEnergieInfo.map((info, index) => ({ path: `/hernieuwbareenergie/${index}`, element: <HernieuwbareEnergieLayout info={info} /> })),
 ];
 
 function App() {
