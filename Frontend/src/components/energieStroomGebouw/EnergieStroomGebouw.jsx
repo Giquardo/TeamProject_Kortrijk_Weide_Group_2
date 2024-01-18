@@ -20,6 +20,14 @@ const EnergieStroomGebouw = ({ info, realtimeVerbruik, productie }) => {
         xaxis: {
         categories: ['Dag', 'Maand', 'Jaar'],
         },
+        colors: ['#ffffff', '#e6007e'],
+        dataLabels: {
+            enabled: true,
+            textAnchor: 'start', // Position the labels next to the bars
+            style: {
+              colors: ['#000000'], // Make the labels black
+            },
+          },
     };
 
     const series = [
