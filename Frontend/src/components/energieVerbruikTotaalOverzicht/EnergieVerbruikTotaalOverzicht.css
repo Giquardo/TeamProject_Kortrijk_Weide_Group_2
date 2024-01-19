@@ -4,13 +4,13 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  max-width: 100%;  
+  max-width: 100%;
 }
 
 .image {
   max-width: 100%;
   max-height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
   z-index: 0;
 }
 
@@ -27,12 +27,12 @@
 
 .textbox2 {
   top: 80%;
-  left: 15%; 
+  left: 15%;
 }
 
 .textbox3 {
-  top: 70%; 
-  left: 75%; 
+  top: 70%;
+  left: 75%;
 }
 
 .title {
@@ -41,8 +41,7 @@
   left: 64px;
   text-align: left;
   color: black;
-  font-family: "VAG Rounded";
+  font-family: "VAG Rounded Bold";
   font-size: 96px;
   z-index: 1;
 }
-
