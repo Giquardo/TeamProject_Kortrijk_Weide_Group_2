@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './EnergieStroomGebouw.css';
 import Chart from 'react-apexcharts';
 
-const EnergieStroomGebouw = ({ info, realtimeVerbruik, productie }) => {
-  // Use the info prop directly
-  const building = info;
+const EnergieStroomGebouw = ({ info }) => {
+    const [data, setData] = useState(null);
+  
+    useEffect(() => {
+        fetch(`http://localhost:5000/api/data/buildingspecific/${info.id}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.buildingspecificoverview && Array.isArray(data.buildingspecificoverview)) {
+              setData(data.buildingspecificoverview);
+            } else {
+              console.error('Unexpected API response:', data);
+            }
+          })
+          .catch(error => console.error('Error fetching data:', error));
+      }, [info.id]);
+    // Use the info prop directly
+    const building = info;
 
     // Define your chart options and series
     const options = {
@@ -30,17 +44,20 @@ const EnergieStroomGebouw = ({ info, realtimeVerbruik, productie }) => {
           },
     };
 
-    const series = [
+    // Use the fetched data to set the data for the chart series
+    const series = data ? [
         {
         name: 'Verbruik',
-        data: [400, 430, 448],
+        data: data.filter(item => item.type === 'Realtime').map(item => item.consumption),
         },
         {
         name: 'Referentie',
-        data: [300, 350, 400],
+        data: data.filter(item => item.type === 'Referentie').map(item => item.consumption),
         },
-    ];
+    ] : [];
 
+    const dailyRealtime = data && data.find(item => item.type === 'Realtime' && item.period === 'Day');
+    
     return (
         <div className="energie-stroom-gebouw-container">
           <h1 className='title'>Energie Stroom</h1>
@@ -50,21 +67,21 @@ const EnergieStroomGebouw = ({ info, realtimeVerbruik, productie }) => {
           </div>
           <div className='energiestroom-info-container'>
             <div className="energiestroom-circle-container">
-              <div className="energiestroom-circle">
+                <div className="energiestroom-circle">
                 Realtime Verbruik
-                <div className="circle-variable">realtimeVerbruik</div>
-              </div>
-              <div className="energiestroom-circle">
-                Productie
-                <div className="circle-variable">productie</div>
-              </div>
+                <div className="circle-variable">{dailyRealtime ? dailyRealtime.consumption : 'Loading...'}</div>
             </div>
-            <div className="chart-container">
-              <Chart options={options} series={series} type="bar" height={350} />
-            </div>
-          </div>
+            <div className="energiestroom-circle">
+            Productie
+            <div className="circle-variable">{dailyRealtime ? dailyRealtime.production : 'Loading...'}</div>
         </div>
-      );
+    </div>
+      <div className="chart-container">
+        <Chart options={options} series={series} type="bar" height={350} />
+      </div>
+    </div>
+  </div>
+);
 };
 
 export default EnergieStroomGebouw;

@@ -21,15 +21,15 @@ const TotaalOverzicht = () => {
         <img className="image" src={overzicht} alt="overzicht" />
         <div className="textbox textbox1">
           Totaal Verbruik
-          <div>{data.consumption} kW</div>
+          <div>{data.consumption ? `${data.consumption} kW` : 'Loading...'}</div>
         </div>
         <div className="textbox textbox2">
           Eigen Verbruik
-          <div>{data.totalProductieEigenVerbruik} kW</div>
+          <div>{data.totalProductieEigenVerbruik ? `${data.totalProductieEigenVerbruik} kW` : 'Loading...'}</div>
         </div>
         <div className="textbox textbox3">
           Totaal Opbrengst
-          <div>{data.totalProductionProfit} kW</div>        
+          <div>{data.totalProductionProfit ? `${data.totalProductionProfit} kW` : 'Loading...'}</div>        
         </div>
       </div>
     </>

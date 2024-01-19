@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./HernieuwbareEnergie.css";
 import zonneEnergie from "../../Images/zonneEnergie.png";
 
-
 const Circle = ({ title, value }) => (
   <div className="circle">
     <p className="value-type">{title}</p>
-    <p className="value">{value} kW</p>
+    <p className="value">{value ? `${value} kW` : 'Loading...'}</p>
   </div>
 );
 
