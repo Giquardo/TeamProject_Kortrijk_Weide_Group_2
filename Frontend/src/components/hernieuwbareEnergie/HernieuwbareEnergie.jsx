@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./HernieuwbareEnergie.css";
 import zonneEnergie from "../../Images/zonneEnergie.png";
+import "../General.css";
 
 const Circle = ({ title, value }) => (
   <div className="circle">
@@ -9,7 +10,7 @@ const Circle = ({ title, value }) => (
   </div>
 );
 
-const HernieuwbareEnergieLayout = ({ info }) => {
+const HernieuwbareEnergie = ({ info }) => {
   const [data, setData] = useState({ injectie: 0, eigenverbruik: 0, productie: 0 });
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const HernieuwbareEnergieLayout = ({ info }) => {
   return (
     <>
       <div className="hernieuwbareEnergie-container">
-        <h1 className="hernieuwbareEnergie-title">{info.title}</h1>
+        <h1 className="title title_extra">{info.title}</h1>
         <p className="hernieuwbareEnergie-description">{info.description}</p> {/* Add this line */}
         <img className="energie-image" src={zonneEnergie} alt="zonneEnergie" />
         <div className="circles">
@@ -37,4 +38,4 @@ const HernieuwbareEnergieLayout = ({ info }) => {
   );
 };
 
-export default HernieuwbareEnergieLayout;
+export default HernieuwbareEnergie;

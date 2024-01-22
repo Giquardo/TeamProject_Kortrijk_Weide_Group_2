@@ -1,5 +1,6 @@
 import React from "react";
 import "./UitlegEnergieVermogen.css";
+import "../General.css";
 import uitleg from "../../Images/uitlegEnergieVermogen.png";
 
 const UitlegEnergieVermogen = () => {

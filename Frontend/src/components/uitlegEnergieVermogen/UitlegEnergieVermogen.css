@@ -14,10 +14,11 @@
   z-index: 0;
 }
 
-.uitleg-text{
+.uitleg-text {
   position: absolute;
   color: white;
-  font-family: "VAG Rounded Bold";
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600; /* This sets the font weight to semibold */
   font-size: 32px;
 }
 

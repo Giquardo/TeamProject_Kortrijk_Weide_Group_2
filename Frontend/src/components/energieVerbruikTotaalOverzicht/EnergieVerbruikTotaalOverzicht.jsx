@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./EnergieVerbruikTotaalOverzicht.css";
 import overzicht from "../../Images/TotaalOverzicht.png";
+import "../General.css";
 
 const TotaalOverzicht = () => {
 

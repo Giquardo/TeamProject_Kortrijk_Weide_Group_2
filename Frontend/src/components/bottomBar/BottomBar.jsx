@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { IoExpand, IoPlayCircleOutline } from "react-icons/io5";
-
+import { IoExpand, IoPlayCircleOutline, IoArrowBack, IoArrowForward } from "react-icons/io5";
+import { Link } from 'react-router-dom';
 import './BottomBar.css';
 
-const BottomBar = ({ onPlay }) => {
+const BottomBar = ({  onPlay, navigate, currentIndex, totalNumberOfPages, routes  }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -37,9 +37,23 @@ const BottomBar = ({ onPlay }) => {
     }
   }
 
+  const goBack = () => {
+    const prevIndex = (currentIndex - 1 + totalNumberOfPages) % totalNumberOfPages;
+    navigate(routes[prevIndex].path);
+  };
+
+  const goForward = () => {
+    const nextIndex = (currentIndex + 1) % totalNumberOfPages;
+    navigate(routes[nextIndex].path);
+  };
+
   return (
     <div className={`bottom-bar ${isVisible ? 'visible' : ''}`} onMouseEnter={() => setIsVisible(true)} onMouseLeave={() => setIsVisible(false)}>
       <IoPlayCircleOutline className="play-icon" onClick={onPlay} />
+      <div>
+        <IoArrowBack className="arrow-icon" onClick={goBack} />
+        <IoArrowForward className="arrow-icon" onClick={goForward} />
+      </div>
       <IoExpand className="fullscreen-icon" onClick={goFullScreen} />
     </div>
   );

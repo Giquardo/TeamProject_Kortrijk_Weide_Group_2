@@ -9,14 +9,9 @@
   left: 0;
 }
 
-.hernieuwbareEnergie-title {
-  position: absolute;
+.title_extra {
   left: 0;
   text-align: left;
-  margin: 125px 125px 0px 0px;
-  color: black;
-  font-family: "VAG Rounded Bold";
-  font-size: 99px;
   width: 40%;
   height: 100%;
   padding: 0 0 0 5%;
@@ -36,10 +31,12 @@
   top: 10%; /* Position it around the middle of the container, adjust as needed */
   width: 50%; /* Take up half the width of the container */
   color: white; /* Set the text color to white */
-  font-family: "VAG Rounded Bold"; /* Set the font */
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600; /* This sets the font weight to semibold */    
   font-size: 20px; /* Set the font size */
   z-index: 2; /* Make sure it's above the image */
   font-size: 32px;
+  padding-right: 16px;
 }
 
 .value-type, .value {
@@ -50,13 +47,15 @@
 
 .value-type{
   color: white;
-  font-family: "VAG Rounded Bold";
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;   
   font-size: 32px;
 }
 
 .value{
   color: white;
-  font-family: "VAG Rounded Bold";
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700; 
   font-size: 40px;
 }
 
@@ -80,8 +79,8 @@
 .circle {
   border: 8px solid white;
   border-radius: 50%;
-  width: 232px;
-  height: 232px;
+  width: 256px;
+  height: 256px;
   display: flex;
   justify-content: center;
   align-items: center;
