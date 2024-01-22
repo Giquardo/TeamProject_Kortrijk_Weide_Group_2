@@ -3,11 +3,14 @@ import "./Quiz.css";
 import vragen from "../../data/vragen.js";
 import Lottie from "lottie-react";
 import timer from "../../animations/timer.json";
+import timerTeken from "../../animations/timerTeken.json";
+
 
 const Quiz = () => {
   const ref = useRef(null);
   const [randomQuestion, setRandomQuestion] = useState(null);
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
+  const [timerFinished, setTimerFinished] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -21,11 +24,15 @@ const Quiz = () => {
     // After 10 seconds, show the correct answer
     const timeoutId = setTimeout(() => {
       setShowCorrectAnswer(true);
-    }, 10000);
+    }, 15000);
 
     // Clean up the timeout when the component is unmounted or the question changes
     return () => clearTimeout(timeoutId);
   }, []);
+
+  const handleAnimationComplete = () => {
+    setTimerFinished(true);
+  };
 
   return (
     <>
@@ -44,8 +51,17 @@ const Quiz = () => {
             </div>
             {showCorrectAnswer && <p className="verklaring">Verklaring: {randomQuestion.verklaring}</p>}
           </div>
-          <div className="timer">
-            <Lottie animationData={timer} loop={false} autoplay={true} />
+          <div className="timer-container">
+            {!timerFinished && (
+              <div className="timer">
+                <Lottie animationData={timer} loop={false} autoplay={true} onComplete={handleAnimationComplete} />
+              </div>
+            )}
+            {!timerFinished && (
+              <div className="timerTeken">
+                <Lottie animationData={timerTeken} loop={true} autoplay={true} onComplete={handleAnimationComplete} />
+              </div>
+            )}
           </div>
         </div>
       )}

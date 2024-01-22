@@ -14,13 +14,3 @@
   z-index: 0;
 }
 
-.totaalOverzicht-title {
-  position: absolute;
-  top: 0;
-  left: 64px;
-  text-align: left;
-  color: black;
-  font-family: "VAG Rounded Bold";
-  font-size: 96px;
-  z-index: 1;
-}

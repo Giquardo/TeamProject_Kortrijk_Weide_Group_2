@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation, Navigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import ProgressBar from './components/progressBar/ProgressBar.jsx';
 import Background from "./components/background/Background.jsx";
@@ -9,7 +9,7 @@ import UitlegEnergieVermogen from "./components/uitlegEnergieVermogen/UitlegEner
 import EnergieStroomGebouw from "./components/energieStroomGebouw/EnergieStroomGebouw.jsx";
 import energieStroomGebouwInfo from "./data/energieStroomGebouwInfo.js";
 import Quiz from "./components/quiz/Quiz.jsx";
-import HernieuwbareEnergieLayout from "./components/hernieuwbareEnergie/HernieuwbareEnergieLayout.jsx";
+import HernieuwbareEnergie from "./components/hernieuwbareEnergie/HernieuwbareEnergie.jsx";
 import hernieuwbareEnergieInfo from "./data/hernieuwbareEnergieInfo.js";
 import EndScreen from "./components/endScreen/EndScreen.jsx";
 
@@ -23,7 +23,7 @@ const routes = [
   ...energieStroomGebouwInfo.map((info,index) => ({ path: `/gebouw/${index}`, element: <EnergieStroomGebouw info={info}  /> })),
   { path: "/quiz", element: <Quiz /> },
   // Assuming hernieuwbareEnergieInfo is an array of objects
-  ...hernieuwbareEnergieInfo.map((info, index) => ({ path: `/hernieuwbareenergie/${index}`, element: <HernieuwbareEnergieLayout info={info} /> })),
+  ...hernieuwbareEnergieInfo.map((info, index) => ({ path: `/hernieuwbareenergie/${index}`, element: <HernieuwbareEnergie info={info} /> })),
   { path: "/endscreen", element: <EndScreen /> }
 ];
 
@@ -51,7 +51,7 @@ function App() {
         const currentIndex = routes.findIndex(route => route.path === location.pathname);
         const nextIndex = (currentIndex + 1) % totalNumberOfPages;
         navigate(routes[nextIndex].path);
-      }, location.pathname === "/quiz" ? 20000 : 10000);
+      }, location.pathname === "/quiz" ? 25000 : 10000);
     }
     return () => clearInterval(interval);
   }, [location, navigate, isPlaying]);
@@ -61,6 +61,7 @@ function App() {
   };
 
   const progress = (visitedPages.size / totalNumberOfPages) * 100;
+  const currentIndex = routes.findIndex(route => route.path === location.pathname);
 
   return (
     <div className="App" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
@@ -68,12 +69,13 @@ function App() {
         <Background />
         <ProgressBar progress={progress} />
         <Routes>
+          <Route path="/" element={<Navigate to="/totaaloverzicht" replace />} />
           {routes.map((route, index) => (
             <Route key={index} path={route.path} element={route.element} />
           ))}
         </Routes>
       </header>
-      <BottomBar onPlay={onPlay} isHovered={isHovered} />
+      <BottomBar onPlay={onPlay} isHovered={isHovered} navigate={navigate} currentIndex={currentIndex} totalNumberOfPages={totalNumberOfPages} routes={routes} />
     </div>
   );
 };
