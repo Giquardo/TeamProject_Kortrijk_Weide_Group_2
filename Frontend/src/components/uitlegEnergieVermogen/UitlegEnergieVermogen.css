@@ -1,40 +1,54 @@
-.container {
+.uitleg-container {
   display: flex;
-  background-color: beige;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 100%;
+  max-width: 100%;  
 }
 
-img {
-  width: 90%;
-  height: auto;
-  align-items: center;
-  justify-content: center;
+.uitleg-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover; 
+  z-index: 0;
 }
 
-.pijl1,
-.pijl2 {
+.uitleg-text{
   position: absolute;
-  flex-direction: column;
-  left: 0;
-  width: 10%;
-  height: auto;
+  color: white;
+  font-family: "VAG Rounded Bold";
+  font-size: 32px;
 }
 
-.pijl2 {
-  /* onderste pijl */
-  top: calc(50% + 5%);
-  left: calc(50% - 13%);
-  resize: both;
+.uitleg-text1{
+  top: 35%;
+  left: 75%;
+  transform: translate(-50%, -50%);
 }
 
-.pijl1 {
-  /*bovenste pijl*/
-  top: calc(50% - 37.5%);
-  left: calc(50% - 13%);
-  transform: translate(-05%, -05%);
-  resize: both;
+.uitleg-text2{
+  top: 55%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+}
+
+.uitleg-text1::before{
+  content: "";
+  position: absolute;
+  width: 564px; /* Adjust as needed */
+  height: 2px; /* Adjust as needed */
+  background-color: white;
+  top: 50%;
+  left: -572px; /* Adjust as needed */
+}
+
+.uitleg-text2::before{
+  content: "";
+  position: absolute;
+  width: 504px; /* Adjust as needed */
+  height: 2px; /* Adjust as needed */
+  background-color: white;
+  top: 50%;
+  left: -512px; /* Adjust as needed */
 }

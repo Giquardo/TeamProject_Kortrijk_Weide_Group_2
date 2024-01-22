@@ -1,0 +1,28 @@
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 48px;
+  background-color: lightgray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: opacity 0.5s;
+  opacity: 0;
+}
+
+.bottom-bar.visible {
+  opacity: 1;
+}
+
+.play-icon {
+  color: black;
+  font-size: 32px;
+  padding-left: 12px;
+}
+
+.fullscreen-icon {
+  color: black;
+  font-size: 32px;
+  padding-right: 12px;
+}

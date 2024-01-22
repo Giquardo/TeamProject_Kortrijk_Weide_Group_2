@@ -1,44 +1,26 @@
-.overzicht-container {
+.totaalOverzicht-container {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 100%;
+  max-width: 100%;
 }
 
-.image {
-  display: flex;
-  align-items: left;
-  margin: 200px 798px 200px 100px;
-  aspect-ratio: 1;
-  max-width: 50%;
-  height: auto;
+.totaalOverzicht-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 
-.overzicht-titel {
+.totaalOverzicht-title {
   position: absolute;
-  right: 0;
-  text-align: right;
-  margin: 125px 125px 0px 0px;
+  top: 0;
+  left: 64px;
+  text-align: left;
   color: black;
   font-family: "VAG Rounded Bold";
-  font-size: 99px;
-  width: 50%;
-  height: 100%;
-  padding: 0 0 0 5%;
-}
-
-@media screen and (max-width: 1024px) {
-  .overzicht-titel {
-    position: absolute;
-    right: 0;
-    text-align: center;
-    color: black;
-    font-family: "VAG Rounded Bold";
-    font-size: calc(99px * 0.5);
-    width: 50%;
-    height: 100%;
-    padding: 0 0 0 5%;
-  }
+  font-size: 96px;
+  z-index: 1;
 }

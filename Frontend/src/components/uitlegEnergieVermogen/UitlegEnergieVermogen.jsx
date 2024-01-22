@@ -1,23 +1,17 @@
 import React from "react";
 import "./UitlegEnergieVermogen.css";
-import HowestCorner from "../howestCorner/HowestCorner";
-import uitleg from "../../Images/uitlegEnergieVermogen.jpg";
-import Lottie from "lottie-react";
-import arrowWater from "../../animations/arrowWater.json";
+import uitleg from "../../Images/uitlegEnergieVermogen.png";
 
 const UitlegEnergieVermogen = () => {
   return (
-    <div className="container">
-      <img src={uitleg} alt="uitlegEnergieEnVermogen" />
-
-      <div className="pijl1">
-        <Lottie animationData={arrowWater} loop={true} autoplay={true} />
+    <>
+      <h1 className="title">Energie en vermogen</h1>
+      <div className="uitleg-container">
+        <img className="uitleg-image" src={uitleg} alt="uitlegEnergieEnVermogen" />
+        <div className="uitleg-text uitleg-text1">Energie = volume van het water</div>
+        <div className="uitleg-text uitleg-text2">Vermogen = snelheid van het water</div>
       </div>
-      <div className="pijl2">
-        <Lottie animationData={arrowWater} loop={true} autoplay={true} />
-      </div>
-      <HowestCorner />
-    </div>
+    </>
   );
 };
 
