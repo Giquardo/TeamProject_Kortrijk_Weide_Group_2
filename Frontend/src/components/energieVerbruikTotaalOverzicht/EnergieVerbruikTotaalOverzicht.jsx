@@ -26,11 +26,11 @@ const TotaalOverzicht = () => {
         </div>
         <div className="textbox textbox2">
           Eigen Verbruik
-          <div>{data.totalProductieEigenVerbruik ? `${data.totalProductieEigenVerbruik} kW` : 'Loading...'}</div>
+          <div>{data.injection ? `${data.injection} kW` : 'Loading...'}</div>
         </div>
         <div className="textbox textbox3">
           Totaal Opbrengst
-          <div>{data.totalProductionProfit ? `${data.totalProductionProfit} kW` : 'Loading...'}</div>        
+          <div>{data.totalProductie ? `${data.totalProductie} kW` : 'Loading...'}</div>        
         </div>
       </div>
     </>

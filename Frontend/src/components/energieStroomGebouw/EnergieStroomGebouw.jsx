@@ -32,7 +32,7 @@ const EnergieStroomGebouw = ({ info }) => {
         },
         },
         xaxis: {
-        categories: ['Dag', 'Maand', 'Jaar'],
+        categories: ['Week', 'Maand', 'Jaar'],
         },
         colors: ['#ffffff', '#e6007e'],
         dataLabels: {
