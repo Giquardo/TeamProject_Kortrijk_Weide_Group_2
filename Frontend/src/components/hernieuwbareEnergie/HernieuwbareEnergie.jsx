@@ -14,9 +14,9 @@ const HernieuwbareEnergie = ({ info }) => {
   const [data, setData] = useState({ injectie: 0, eigenverbruik: 0, productie: 0 });
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/data/hernieuwbareEnergie/${info.naam}`)
+    fetch(`http://localhost:5000/api/zuinigedata/zuinigeoverview/${info.naam}`)
       .then(response => response.json())
-      .then(data => setData(data.totals))
+      .then(data => setData(data.zuinigeoverview[0]))
       .catch(error => console.error('Error:', error));
   }, [info.naam]);
 
@@ -28,10 +28,10 @@ const HernieuwbareEnergie = ({ info }) => {
         <img className="energie-image" src={zonneEnergie} alt="zonneEnergie" />
         <div className="circles">
           <div className="circle-container">
-            <Circle title="Injectie" value={data.Injectie} />
-            <Circle title="Eigenverbruik" value={data.Productie_EigenVerbruik} />
+            <Circle title="Consumptie" value={data.consumption} />
+            <Circle title="EigenVerbruik" value={data.eigenVerbruik} />
           </div>
-          <Circle title="Productie" value={data.Productie} />
+          <Circle title="Productie" value={data.production} />
         </div>
       </div>
     </>

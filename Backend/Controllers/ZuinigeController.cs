@@ -64,6 +64,7 @@ namespace TeamProject.Controllers
                 double totalProductionPV = 0;
                 double totalInjection = 0;
                 double totalConsumption = 0;
+                double totalEigenVerbruik = 0;
 
                 foreach (var table in kortrijkWeideTablesAfname)
                 {
@@ -107,16 +108,17 @@ namespace TeamProject.Controllers
                 totalProductionPV = Math.Round(totalProductionPV, 2);
                 totalProduction = Math.Round(totalProductionWKK + totalProductionPV, 2);
                 totalConsumption = Math.Round(totalAfname + (totalProduction - totalInjection), 2);
+                totalEigenVerbruik = Math.Round(totalProduction - totalInjection, 2);
 
                 var data = new object();
 
                 if (soort.ToLower() == "pv")
                 {
-                    data = new { Type = "PV", Period = query.Key, Consumption = totalConsumption, Production = totalProductionPV };
+                    data = new { Type = "PV", Period = query.Key, Consumption = totalConsumption, Production = totalProductionPV, EigenVerbruik = totalEigenVerbruik };
                 }
                 else if (soort.ToLower() == "wkk")
                 {
-                    data = new { Type = "WKK", Period = query.Key, Consumption = totalConsumption, Production = totalProductionWKK };
+                    data = new { Type = "WKK", Period = query.Key, Consumption = totalConsumption, Production = totalProductionWKK , EigenVerbruik = totalEigenVerbruik};
                 }
                 else
                 {
