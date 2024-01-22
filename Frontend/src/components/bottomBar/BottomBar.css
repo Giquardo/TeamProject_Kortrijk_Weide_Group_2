@@ -1,24 +1,28 @@
 .bottom-bar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 50px; /* Adjust as needed */
-    background-color: #61dafb; /* Adjust as needed */
-    display: flex;
-    justify-content: space-between; /* Add this line */
-    align-items: center;
-  }
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 48px;
+  background-color: lightgray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: opacity 0.5s;
+  opacity: 0;
+}
 
-  .play-icon {
-    color: #fff; /* Adjust as needed */
-    font-size: 32px; /* Adjust as needed */
-    padding-left: 12px; /* Adjust as needed */
-  }
-  
+.bottom-bar.visible {
+  opacity: 1;
+}
 
-  .fullscreen-icon {
-    color: #fff; /* Adjust as needed */
-    font-size: 32px; /* Adjust as needed */
-    padding-right: 12px; /* Adjust as needed */
-  }
-  
+.play-icon {
+  color: black;
+  font-size: 32px;
+  padding-left: 12px;
+}
+
+.fullscreen-icon {
+  color: black;
+  font-size: 32px;
+  padding-right: 12px;
+}

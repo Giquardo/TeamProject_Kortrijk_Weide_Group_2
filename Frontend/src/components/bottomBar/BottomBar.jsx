@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoExpand, IoPlayCircleOutline } from "react-icons/io5";
 
 import './BottomBar.css';
 
 const BottomBar = ({ onPlay }) => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsVisible(false);
+    }, 5000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   const goFullScreen = () => {
     if (document.fullscreenElement) {
       if (document.exitFullscreen) {
@@ -29,7 +38,7 @@ const BottomBar = ({ onPlay }) => {
   }
 
   return (
-    <div className="bottom-bar">
+    <div className={`bottom-bar ${isVisible ? 'visible' : ''}`} onMouseEnter={() => setIsVisible(true)} onMouseLeave={() => setIsVisible(false)}>
       <IoPlayCircleOutline className="play-icon" onClick={onPlay} />
       <IoExpand className="fullscreen-icon" onClick={goFullScreen} />
     </div>

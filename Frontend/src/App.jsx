@@ -15,13 +15,14 @@ import EndScreen from "./components/endScreen/EndScreen.jsx";
 
 import BottomBar from './components/bottomBar/BottomBar.jsx';
 
-
 const routes = [
   { path: "/totaaloverzicht", element: <TotaalOverzicht /> },
   { path: "/energieverbruiktotaaloverzicht", element: <EnergieVerbruikTotaalOverzicht /> },
   { path: "/uitlegenergievermogen", element: <UitlegEnergieVermogen /> },
+  // Assuming energieStroomGebouwInfo is an array of objects
   ...energieStroomGebouwInfo.map((info,index) => ({ path: `/gebouw/${index}`, element: <EnergieStroomGebouw info={info}  /> })),
   { path: "/quiz", element: <Quiz /> },
+  // Assuming hernieuwbareEnergieInfo is an array of objects
   ...hernieuwbareEnergieInfo.map((info, index) => ({ path: `/hernieuwbareenergie/${index}`, element: <HernieuwbareEnergieLayout info={info} /> })),
   { path: "/endscreen", element: <EndScreen /> }
 ];
@@ -32,6 +33,8 @@ function App() {
   const [visitedPages, setVisitedPages] = useState(new Set());
   const [isPlaying, setIsPlaying] = useState(false);
   const totalNumberOfPages = routes.length;
+  const [isHovered, setIsHovered] = useState(false);
+
 
   useEffect(() => {
     if (location.pathname === routes[0].path) {
@@ -40,9 +43,9 @@ function App() {
       setVisitedPages(prev => new Set([...prev, location.pathname]));
     }
   }, [location]);
-
+  
   useEffect(() => {
-    let interval;
+    let interval = null;
     if (isPlaying) { 
       interval = setInterval(() => {
         const currentIndex = routes.findIndex(route => route.path === location.pathname);
@@ -60,7 +63,7 @@ function App() {
   const progress = (visitedPages.size / totalNumberOfPages) * 100;
 
   return (
-    <div className="App">
+    <div className="App" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <header className="App-header">
         <Background />
         <ProgressBar progress={progress} />
@@ -70,9 +73,9 @@ function App() {
           ))}
         </Routes>
       </header>
-      <BottomBar onPlay={onPlay} />
+      <BottomBar onPlay={onPlay} isHovered={isHovered} />
     </div>
   );
-}
+};
 
 export default App;
