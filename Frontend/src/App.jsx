@@ -12,8 +12,8 @@ import Quiz from "./components/quiz/Quiz.jsx";
 import HernieuwbareEnergie from "./components/hernieuwbareEnergie/HernieuwbareEnergie.jsx";
 import hernieuwbareEnergieInfo from "./data/hernieuwbareEnergieInfo.js";
 import EndScreen from "./components/endScreen/EndScreen.jsx";
-
 import BottomBar from './components/bottomBar/BottomBar.jsx';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 const routes = [
   { path: "/totaaloverzicht", element: <TotaalOverzicht /> },
@@ -71,7 +71,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/totaaloverzicht" replace />} />
           {routes.map((route, index) => (
-            <Route key={index} path={route.path} element={route.element} />
+            <Route key={index} path={route.path} element={
+              <SwitchTransition>
+                <CSSTransition key={location.key} classNames="fade" timeout={300}>
+                  {route.element}
+                </CSSTransition>
+              </SwitchTransition>
+            } />
           ))}
         </Routes>
       </header>
