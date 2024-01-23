@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  max-width: 100%;  
+  max-width: 100%;
 }
 
 .timer-container {
@@ -55,6 +55,7 @@
   color: black;
   text-decoration: line-through;
   font-size: 24px;
+  transition: 300ms ease-in;
 }
 
 .text-content {
@@ -62,16 +63,15 @@
   top: 0;
   text-align: left;
   color: white;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 600; /* This sets the font weight to semibold */  
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600; /* This sets the font weight to semibold */
   font-size: 40px;
-  margin-left: 20%;  
-  max-width: 100%; 
+  margin-left: 20%;
+  max-width: 100%;
   word-wrap: break-word; /* This will break the word to next line */
   overflow-wrap: break-word; /* This will break the word to next line */
 }
 
 .verklaring {
-  
-  width: 100%; 
+  width: 100%;
 }

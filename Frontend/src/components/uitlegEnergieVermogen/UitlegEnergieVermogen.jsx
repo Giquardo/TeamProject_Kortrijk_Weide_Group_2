@@ -8,9 +8,17 @@ const UitlegEnergieVermogen = () => {
     <>
       <h1 className="title">Energie en vermogen</h1>
       <div className="uitleg-container">
-        <img className="uitleg-image" src={uitleg} alt="uitlegEnergieEnVermogen" />
-        <div className="uitleg-text uitleg-text1">Energie = volume van het water</div>
-        <div className="uitleg-text uitleg-text2">Vermogen = snelheid van het water</div>
+        <img
+          className="uitleg-image"
+          src={uitleg}
+          alt="uitlegEnergieEnVermogen"
+        />
+        <div className="uitleg-text uitleg-text1">
+          Energie = hoeveelheid opgevangen water onderaan de dam
+        </div>
+        <div className="uitleg-text uitleg-text2">
+          Vermogen = stroomsnelheid van het water
+        </div>
       </div>
     </>
   );

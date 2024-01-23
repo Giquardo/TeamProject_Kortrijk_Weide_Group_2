@@ -1,87 +1,113 @@
-import React, { useEffect, useState } from 'react';
-import './EnergieStroomGebouw.css';
-import Chart from 'react-apexcharts';
+import React, { useEffect, useState } from "react";
+import "./EnergieStroomGebouw.css";
+import Chart from "react-apexcharts";
 
 const EnergieStroomGebouw = ({ info }) => {
-    const [data, setData] = useState(null);
-  
-    useEffect(() => {
-        fetch(`http://localhost:5000/api/Buildingdata/buildingspecific/${info.id}`)
-          .then(response => response.json())
-          .then(data => {
-            if (data && data.buildingspecificoverview && Array.isArray(data.buildingspecificoverview)) {
-              setData(data.buildingspecificoverview);
-            } else {
-              console.error('Unexpected API response:', data);
-            }
-          })
-          .catch(error => console.error('Error fetching data:', error));
-      }, [info.id]);
-    // Use the info prop directly
-    const building = info;
+  const [data, setData] = useState(null);
 
-    // Define your chart options and series
-    const options = {
-        chart: {
-        type: 'bar',
-        height: 300,
-        },
-        plotOptions: {
-        bar: {
-            horizontal: true,
-        },
-        },
-        xaxis: {
-        categories: ['Week', 'Maand', 'Jaar'],
-        },
-        colors: ['#ffffff', '#e6007e'],
-        dataLabels: {
-            enabled: true,
-            textAnchor: 'start', // Position the labels next to the bars
-            style: {
-              colors: ['#000000'], // Make the labels black
-            },
-          },
-    };
+  useEffect(() => {
+    fetch(`http://localhost:5000/api/Buildingdata/buildingspecific/${info.id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (
+          data &&
+          data.buildingspecificoverview &&
+          Array.isArray(data.buildingspecificoverview)
+        ) {
+          setData(data.buildingspecificoverview);
+        } else {
+          console.error("Unexpected API response:", data);
+        }
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [info.id]);
+  // Use the info prop directly
+  const building = info;
 
-    // Use the fetched data to set the data for the chart series
-    const series = data ? [
+  // Define your chart options and series
+  const options = {
+    chart: {
+      type: "bar",
+      height: 300,
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+      },
+    },
+    xaxis: {
+      categories: ["Week", "Maand", "Jaar"],
+    },
+    colors: ["#ffffff", "#e6007e"],
+    dataLabels: {
+      enabled: true,
+      textAnchor: "start", // Position the labels next to the bars
+      style: {
+        colors: ["#000000"], // Make the labels black
+      },
+    },
+  };
+
+  // Use the fetched data to set the data for the chart series
+  const series = data
+    ? [
         {
-        name: 'Verbruik',
-        data: data.filter(item => item.type === 'Realtime').map(item => item.consumption),
+          name: "Verbruik",
+          data: data
+            .filter((item) => item.type === "Realtime")
+            .map((item) => item.consumption),
         },
         {
-        name: 'Referentie',
-        data: data.filter(item => item.type === 'Referentie').map(item => item.consumption),
+          name: "Referentie",
+          data: data
+            .filter((item) => item.type === "Referentie")
+            .map((item) => item.consumption),
         },
-    ] : [];
+      ]
+    : [];
 
-    const dailyRealtime = data && data.find(item => item.type === 'Realtime' && item.period === 'Week');
-        
-    return (
-        <div className="energie-stroom-gebouw-container">
-          <h1 className='title'>Energie Stroom</h1>
-          <div className="building-container">
-            <img className='building-image' src={building.image} alt={building.name} />
-            <h2 className='building-title'>{building.name}</h2>
-          </div>
-          <div className='energiestroom-info-container'>
-            <div className="energiestroom-circle-container">
-                <div className="energiestroom-circle">
-                Realtime Verbruik
-                <div className="circle-variable">{dailyRealtime ? dailyRealtime.consumption : 'Loading...'}</div>
+  const dailyRealtime =
+    data &&
+    data.find((item) => item.type === "Realtime" && item.period === "Week");
+
+  return (
+    <div className="energie-stroom-gebouw-container">
+      <h1 className="title title_extra">Energie Stroom</h1>
+      <div className="building-container">
+        <img
+          className="building-image"
+          src={building.image}
+          alt={building.name}
+        />
+        <h2 className="building-title">{building.name}</h2>
+      </div>
+      <div className="energiestroom-info-container">
+        <div className="energiestroom-circle-container">
+          <div className="energiestroom-circle">
+            Realtime Verbruik
+            <div className="circle-variable">
+              {dailyRealtime ? dailyRealtime.consumption : "Loading..."}
             </div>
-            <div className="energiestroom-circle">
+          </div>
+          <div className="energiestroom-circle">
             Productie
-            <div className="circle-variable">{dailyRealtime ? dailyRealtime.production : 'Loading...'}</div>
+            <div className="circle-variable">
+              {dailyRealtime ? dailyRealtime.production : "Loading..."}
+            </div>
+          </div>
         </div>
-    </div>
-      <div className="chart-container">
-        <Chart options={options} series={series} type="bar" height={350} />
+        <div className="chart-container">
+          <Chart
+            className="chart"
+            options={options}
+            series={series}
+            type="bar"
+            height={350}
+          />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default EnergieStroomGebouw;

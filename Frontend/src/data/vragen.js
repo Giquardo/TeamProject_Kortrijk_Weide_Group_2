@@ -18,7 +18,7 @@ const vragen = [
     antwoorden: [
       { key: 'a', text: "Ze zijn onuitputtelijk" },
       { key: 'b', text: "Ze veroorzaken geen uitstoot van broeikasgassen" },
-      { key: 'c', text: "Ze zijn goedkoper dan fossiele brandstoffen" },
+      { key: 'c', text: "Ze zijn duurder dan fossiele brandstoffen" },
       { key: 'd', text: "Ze zijn altijd beschikbaar, ongeacht het weer" }
     ],
     correctAntwoord: "a",

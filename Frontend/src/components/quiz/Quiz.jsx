@@ -5,7 +5,6 @@ import Lottie from "lottie-react";
 import timer from "../../animations/timer.json";
 import timerTeken from "../../animations/timerTeken.json";
 
-
 const Quiz = () => {
   const ref = useRef(null);
   const [randomQuestion, setRandomQuestion] = useState(null);
@@ -36,6 +35,7 @@ const Quiz = () => {
 
   return (
     <>
+      <h1 className="title title_extra">Quiz</h1>
       {randomQuestion && (
         <div className="container">
           <div className="text-content">
@@ -43,23 +43,44 @@ const Quiz = () => {
             <div className="antwoord">
               {randomQuestion.antwoorden.map((antwoord) => (
                 <div key={antwoord.key}>
-                  <p className={showCorrectAnswer && antwoord.key !== randomQuestion.correctAntwoord ? 'wrong-answer' : ''}>
+                  <p
+                    className={
+                      showCorrectAnswer &&
+                      antwoord.key !== randomQuestion.correctAntwoord
+                        ? "wrong-answer"
+                        : ""
+                    }
+                  >
                     {antwoord.key}. {antwoord.text}
                   </p>
                 </div>
               ))}
             </div>
-            {showCorrectAnswer && <p className="verklaring">Verklaring: {randomQuestion.verklaring}</p>}
+            {showCorrectAnswer && (
+              <p className="verklaring">
+                Verklaring: {randomQuestion.verklaring}
+              </p>
+            )}
           </div>
           <div className="timer-container">
             {!timerFinished && (
               <div className="timer">
-                <Lottie animationData={timer} loop={false} autoplay={true} onComplete={handleAnimationComplete} />
+                <Lottie
+                  animationData={timer}
+                  loop={false}
+                  autoplay={true}
+                  onComplete={handleAnimationComplete}
+                />
               </div>
             )}
             {!timerFinished && (
               <div className="timerTeken">
-                <Lottie animationData={timerTeken} loop={true} autoplay={true} onComplete={handleAnimationComplete} />
+                <Lottie
+                  animationData={timerTeken}
+                  loop={true}
+                  autoplay={true}
+                  onComplete={handleAnimationComplete}
+                />
               </div>
             )}
           </div>
