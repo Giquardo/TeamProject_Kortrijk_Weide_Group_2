@@ -169,7 +169,7 @@ namespace TeamProject.Controllers
                     //eigen verbruik
                     totalEigenVerbruik = Math.Round(totalProduction - totalInjection, 2);
 
-                    var data = new { Period = query.Key, ReferenceConsumption = totalConsumptionRef, Consumption = totalConsumption, ReferenceProduction = totalProductionRef, Production = totalProduction, ReferenceInjection = totalInjectionRef, Injection = totalInjection};
+                    var data = new { Period = query.Key, ReferenceConsumption = totalConsumptionRef, Consumption = totalConsumption, ReferenceProduction = totalProductionRef, Production = totalProduction, ReferenceInjection = totalInjectionRef, Injection = totalInjection, EigenVerbruik = totalEigenVerbruik};
 
                     results["generaloverview"].Add(data);
                 }
