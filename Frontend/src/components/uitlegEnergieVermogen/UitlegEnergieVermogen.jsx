@@ -6,7 +6,7 @@ import uitleg from "../../Images/uitlegEnergieVermogen.png";
 const UitlegEnergieVermogen = () => {
   return (
     <>
-      <h1 className="title">Energie en vermogen</h1>
+      <h1 className="title title_ectra">Energie en vermogen</h1>
       <div className="uitleg-container">
         <img
           className="uitleg-image"

@@ -37,13 +37,28 @@ const EnergieStroomGebouw = ({ info }) => {
     },
     xaxis: {
       categories: ["Week", "Maand", "Jaar"],
+      labels: {
+        style: {
+          colors: ["#ffffff"],
+          fontSize: "10px",
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: ["#ffffff"],
+          fontSize: "16px",
+        },
+      },
     },
     colors: ["#ffffff", "#e6007e"],
     dataLabels: {
       enabled: true,
       textAnchor: "start", // Position the labels next to the bars
       style: {
-        colors: ["#000000"], // Make the labels black
+        colors: ["#000000"],
+        fontSize: "16px",
       },
     },
   };
