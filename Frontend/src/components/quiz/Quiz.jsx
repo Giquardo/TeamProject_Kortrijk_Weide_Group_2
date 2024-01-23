@@ -4,6 +4,7 @@ import vragen from "../../data/vragen.js";
 import Lottie from "lottie-react";
 import timer from "../../animations/timer.json";
 import timerTeken from "../../animations/timerTeken.json";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 
 const Quiz = () => {
   const ref = useRef(null);
@@ -46,12 +47,16 @@ const Quiz = () => {
                   <p
                     className={
                       showCorrectAnswer &&
-                      antwoord.key !== randomQuestion.correctAntwoord
-                        ? "wrong-answer"
+                      antwoord.key === randomQuestion.correctAntwoord
+                        ? "right-answer"
                         : ""
                     }
                   >
                     {antwoord.key}. {antwoord.text}
+                    {showCorrectAnswer &&
+                      antwoord.key === randomQuestion.correctAntwoord && (
+                        <IoCheckmarkCircleOutline className="checkmark" />
+                      )}
                   </p>
                 </div>
               ))}

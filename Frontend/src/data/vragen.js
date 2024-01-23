@@ -4,48 +4,48 @@ const vragen = [
     id: 1,
     vraag: "Wat is de belangrijkste functie van warmtekrachtkoppeling (WKK) in Kortrijk Weide?",
     antwoorden: [
-      { key: 'a', text: "Elektriciteit genereren" },
-      { key: 'b', text: "Warmte leveren voor gebouwen" },
-      { key: 'c', text: "Water zuiveren" },
-      { key: 'd', text: "Voedselbereiding" }
+      { key: 'A', text: "Elektriciteit genereren" },
+      { key: 'B', text: "Warmte leveren voor gebouwen" },
+      { key: 'C', text: "Water zuiveren" },
+      { key: 'D', text: "Voedselbereiding" }
     ],
-    correctAntwoord: "a",
+    correctAntwoord: "A",
     verklaring: "WKK produceert elektriciteit en warmte voor gebouwen."
   }, 
   {
     id: 2,
     vraag: "Wat is een van de voordelen van hernieuwbare energiebronnen zoals zonne-energie?",
     antwoorden: [
-      { key: 'a', text: "Ze zijn onuitputtelijk" },
-      { key: 'b', text: "Ze veroorzaken geen uitstoot van broeikasgassen" },
-      { key: 'c', text: "Ze zijn duurder dan fossiele brandstoffen" },
-      { key: 'd', text: "Ze zijn altijd beschikbaar, ongeacht het weer" }
+      { key: 'A', text: "Ze zijn onuitputtelijk" },
+      { key: 'B', text: "Ze veroorzaken geen uitstoot van broeikasgassen" },
+      { key: 'C', text: "Ze zijn duurder dan fossiele brandstoffen" },
+      { key: 'D', text: "Ze zijn altijd beschikbaar, ongeacht het weer" }
     ],
-    correctAntwoord: "a",
-    verklaring: "ze zijn afhankelijk van natuurlijke processen die voortdurend plaatsvinden en niet worden uitgeput bij gebruik, zoals bijvoorbeeld fossiele brandstoffen "
+    correctAntwoord: "A",
+    verklaring: "Ze steunen op duurzame, onuitputtelijke natuurlijke processen, in tegenstelling tot fossiele brandstoffen."
   },
   {
     id: 3,
     vraag: "Wat is het belangrijkste doel van het warmtenet op de Kortrijk Weide-site?",
     antwoorden: [
-      { key: 'a', text: "Het opwekken van elektriciteit" },
-      { key: 'b', text: "Het verwarmen van gebouwen" },
-      { key: 'c', text: "Het koelen van gebouwen" },
-      { key: 'd', text: "Het opslaan van energie" }
+      { key: 'A', text: "Het opwekken van elektriciteit" },
+      { key: 'B', text: "Het verwarmen van gebouwen" },
+      { key: 'C', text: "Het koelen van gebouwen" },
+      { key: 'D', text: "Het opslaan van energie" }
     ],
-    correctAntwoord: "b",
+    correctAntwoord: "B",
     verklaring: "Het warmtenet op Kortrijk Weide zal warmte leveren aan gebouwen."
   },
   {
     id: 4,
     vraag: "Welke hernieuwbare energiebron wordt vaak gebruikt in gebouwen om warmte en elektriciteit op te wekken?",
     antwoorden: [
-      { key: 'a', text: "Zonne-energie" },
-      { key: 'b', text: "Windenergie" },
-      { key: 'c', text: "Aardwarmte" },
-      { key: 'd', text: "Kolen" }
+      { key: 'A', text: "Aardwarmte" },
+      { key: 'B', text: "Windenergie" },
+      { key: 'C', text: "Zonne-energie" },
+      { key: 'D', text: "Kolen" }
     ],
-    correctAntwoord: "a",
+    correctAntwoord: "C",
     verklaring: "Zonnepanelen worden vaak gebruikt om zonne-energie op te wekken."
   }
 ];
