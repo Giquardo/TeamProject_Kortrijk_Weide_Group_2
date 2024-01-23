@@ -151,8 +151,8 @@ namespace TeamProject.Controllers
                     }
 
                     //afname
-                    totalAfnameRef= Math.Round(totalProductionRef, 2);
-                    totalAfname = Math.Round(totalProduction, 2);
+                    totalAfnameRef= Math.Round(totalAfnameRef, 2);
+                    totalAfname = Math.Round(totalAfname, 2);
                     //injectie
                     totalInjectionRef = Math.Round(totalInjectionRef, 2);
                     totalInjection = Math.Round(totalInjection, 2);
@@ -169,7 +169,7 @@ namespace TeamProject.Controllers
                     //eigen verbruik
                     totalEigenVerbruik = Math.Round(totalProduction - totalInjection, 2);
 
-                    var data = new { Period = query.Key, ReferenceConsumption = totalConsumptionRef, Consumption = totalConsumption, ReferenceProduction = totalProductionRef, Production = totalProduction, ReferenceInjection = totalInjectionRef, Injection = totalInjection, EigenVerbruik = totalEigenVerbruik};
+                    var data = new { Period = query.Key, ReferenceConsumption = totalConsumptionRef, Consumption = totalConsumption, ReferenceProduction = totalProductionRef, Production = totalProduction, ReferenceInjection = totalInjectionRef, Injection = totalInjection};
 
                     results["generaloverview"].Add(data);
                 }

@@ -149,8 +149,8 @@ namespace TeamProject.Controllers
                         }
                     }
 
-                    totalAfnameRef= Math.Round(totalProductionRef, 2);
-                    totalAfname = Math.Round(totalProduction, 2);
+                    totalAfnameRef= Math.Round(totalAfnameRef, 2);
+                    totalAfname = Math.Round(totalAfname, 2);
                     totalInjectionRef = Math.Round(totalInjectionRef, 2);
                     totalInjection = Math.Round(totalInjection, 2);
                     totalProductionWKKRef = Math.Round(totalProductionWKKRef, 2);
