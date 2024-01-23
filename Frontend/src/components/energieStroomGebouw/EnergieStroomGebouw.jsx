@@ -6,7 +6,7 @@ const EnergieStroomGebouw = ({ info }) => {
     const [data, setData] = useState(null);
   
     useEffect(() => {
-        fetch(`http://localhost:5000/api/data/buildingspecific/${info.id}`)
+        fetch(`http://localhost:5000/api/Buildingdata/buildingspecific/${info.id}`)
           .then(response => response.json())
           .then(data => {
             if (data && data.buildingspecificoverview && Array.isArray(data.buildingspecificoverview)) {
@@ -56,8 +56,8 @@ const EnergieStroomGebouw = ({ info }) => {
         },
     ] : [];
 
-    const dailyRealtime = data && data.find(item => item.type === 'Realtime' && item.period === 'Day');
-    
+    const dailyRealtime = data && data.find(item => item.type === 'Realtime' && item.period === 'Week');
+        
     return (
         <div className="energie-stroom-gebouw-container">
           <h1 className='title'>Energie Stroom</h1>

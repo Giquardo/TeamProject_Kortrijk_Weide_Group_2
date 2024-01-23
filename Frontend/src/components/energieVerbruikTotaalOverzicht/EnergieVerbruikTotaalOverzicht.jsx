@@ -9,9 +9,9 @@ const TotaalOverzicht = () => {
 
   useEffect(() => {
     // Replace with your HTTP trigger
-    fetch('http://localhost:5000/api/data/overview/weekly')
+    fetch('http://localhost:5000/api/weeklydata/generaloverview')
       .then(response => response.json())
-      .then(data => setData(data.weeklyoverview[0])); // Access the first object in the array
+      .then(data => setData(data.productionoverview[0])); // Access the first object in the array
       console.log(data);
   }, []);
   
@@ -25,12 +25,12 @@ const TotaalOverzicht = () => {
           <div>{data.consumption ? `${data.consumption} kW` : 'Loading...'}</div>
         </div>
         <div className="textbox textbox2">
-          Eigen Verbruik
+          Injectie
           <div>{data.injection ? `${data.injection} kW` : 'Loading...'}</div>
         </div>
         <div className="textbox textbox3">
-          Totaal Opbrengst
-          <div>{data.totalProductie ? `${data.totalProductie} kW` : 'Loading...'}</div>        
+          Totale productie
+          <div>{data.production ? `${data.production} kW` : 'Loading...'}</div>        
         </div>
       </div>
     </>

@@ -76,6 +76,7 @@ namespace TeamProject.Controllers
                     double totalInjection = 0;
                     double totalConsumptionRef = 0;
                     double totalConsumption = 0;
+                    double totalEigenVerbruik = 0;
         
                     foreach (var table in kortrijkWeideTablesAfnameRef)
                     {
@@ -149,20 +150,26 @@ namespace TeamProject.Controllers
                         }
                     }
 
+                    //afname
                     totalAfnameRef= Math.Round(totalProductionRef, 2);
                     totalAfname = Math.Round(totalProduction, 2);
+                    //injectie
                     totalInjectionRef = Math.Round(totalInjectionRef, 2);
                     totalInjection = Math.Round(totalInjection, 2);
+                    //productie
                     totalProductionWKKRef = Math.Round(totalProductionWKKRef, 2);
                     totalProductionPVRef = Math.Round(totalProductionPVRef, 2);
                     totalProductionWKK = Math.Round(totalProductionWKK, 2);
                     totalProductionPV = Math.Round(totalProductionPV, 2);
                     totalProductionRef = Math.Round(totalProductionWKKRef + totalProductionPVRef, 2);
                     totalProduction = Math.Round(totalProductionWKK + totalProductionPV, 2);
+                    //consumptie
                     totalConsumptionRef = Math.Round(totalAfnameRef + (totalProductionRef - totalInjectionRef), 2);
                     totalConsumption = Math.Round(totalAfname + (totalProduction - totalInjection), 2);
+                    //eigen verbruik
+                    totalEigenVerbruik = Math.Round(totalProduction - totalInjection, 2);
 
-                    var data = new { Period = query.Key, ReferenceConsumption = totalConsumptionRef, Consumption = totalConsumption, ReferenceProduction = totalProductionRef, Production = totalProduction, ReferenceInjection = totalInjectionRef, Injection = totalInjection};
+                    var data = new { Period = query.Key, ReferenceConsumption = totalConsumptionRef, Consumption = totalConsumption, ReferenceProduction = totalProductionRef, Production = totalProduction, ReferenceInjection = totalInjectionRef, Injection = totalInjection, EigenVerbruik = totalEigenVerbruik};
 
                     results["generaloverview"].Add(data);
                 }
