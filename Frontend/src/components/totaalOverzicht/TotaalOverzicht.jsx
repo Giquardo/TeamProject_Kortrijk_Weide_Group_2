@@ -6,7 +6,7 @@ import "../General.css";
 const TotaalOverzicht = () => {
   return (
     <>
-      <h1 className="title title_extra">Energie Verbruik Kortrijk Weide</h1>
+      <h1 className="title">Energie Verbruik Kortrijk Weide</h1>
       <div className="totaalOverzicht-container">
         <img
           className="totaalOverzicht-image"

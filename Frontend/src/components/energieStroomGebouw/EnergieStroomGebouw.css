@@ -7,24 +7,31 @@
   max-width: 100%;
 }
 
+.building-image {
+  width: 80%;
+  height: auto;
+}
+
 .building-title {
   text-align: center;
   color: white;
   font-family: "VAG Rounded Light";
   font-size: 48px;
+  margin-top: 20px;
 }
 
 .building-container {
   position: absolute;
   z-index: 1;
-  left: 10%;
-  top: 25%;
+  left: 0;
+  top: 35%;
+  width: 50%;
 }
 
 .energiestroom-circle-container {
   position: absolute;
-  right: 160px;
-  top: 128px;
+  right: 140px;
+  top: 100px;
   display: flex;
   flex-direction: horizontal;
   gap: 20px;
@@ -33,8 +40,8 @@
 .energiestroom-circle {
   border: 8px solid white;
   border-radius: 50%;
-  width: 310px;
-  height: 310px;
+  width: 260px;
+  height: 260px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,7 +50,7 @@
   margin: 12px;
   font-family: "Open Sans", sans-serif;
   font-weight: 700;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .circle-variable {
@@ -51,7 +58,7 @@
   color: #e6007e;
   font-family: "Open Sans", sans-serif;
   font-weight: 700;
-  font-size: 50px;
+  font-size: 45px;
 }
 
 .energiestroom-info-container {
@@ -63,8 +70,8 @@
 
 .chart-container {
   position: fixed;
-  top: 55%;
-  left: 20%;
+  top: 50%;
+  left: 15%;
   width: 100%; /* Take up full width of parent */
   display: flex;
   justify-content: center; /* Center chart horizontally */
