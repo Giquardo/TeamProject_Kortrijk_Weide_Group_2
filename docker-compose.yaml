@@ -1,0 +1,12 @@
+version: '3'
+services:
+  frontend:
+    build: ./Frontend
+    image: xandervh/frontend
+    ports:
+      - "3000:3000"
+  backend:
+    build: ./Backend
+    image: xandervh/backend
+    ports:
+      - "8000:80"
