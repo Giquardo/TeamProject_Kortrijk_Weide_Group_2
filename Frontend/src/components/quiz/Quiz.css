@@ -129,4 +129,24 @@
     bottom: 0;
     font-size: 30px;
   }
+
+  .timer {
+    position: absolute;
+    top: 250px;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    padding: 0 7% 0 0;
+    color: white;
+  }
+
+  .timerTeken {
+    position: absolute;
+    top: 300px;
+    right: 0;
+    width: 160px;
+    height: 160px;
+    padding: 0 3% 0 0;
+    color: white;
+  }
 }

@@ -5,7 +5,7 @@ import "../General.css";
 const Circle = ({ title, value }) => (
   <div className="circle">
     <p className="value-type">{title}</p>
-    <p className="value">{value ? `${value} kW` : "Loading..."}</p>
+    <p className="value">{value ? `${value} kWh` : "Loading..."}</p>
   </div>
 );
 
@@ -27,9 +27,7 @@ const HernieuwbareEnergie = ({ info }) => {
     <>
       <div className="hernieuwbareEnergie-container">
         <h1 className="title title_extra">{info.title}</h1>
-        <p className="hernieuwbareEnergie-description">
-          {info.description}
-        </p>{" "}
+        <p className="hernieuwbareEnergie-description">{info.description}</p>
         {/* Add this line */}
         <img className="energie-image" src={info.image} alt={info.imageAlt} />
         <div className="circles">

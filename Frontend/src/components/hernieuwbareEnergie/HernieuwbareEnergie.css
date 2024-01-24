@@ -1,5 +1,5 @@
 .hernieuwbareEnergie-container {
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,10 +10,11 @@
 }
 
 .energie-image {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 80%;
+  max-height: 90%;
   object-fit: contain;
   align-self: center;
+  margin-right: 450px;
   z-index: 1;
 }
 
@@ -29,11 +30,12 @@
   z-index: 2; /* Make sure it's above the image */
   font-size: 32px;
   padding-right: 140px;
+  text-align: left;
 }
 
 .value-type,
 .value {
-  margin: 16px; /* Add a little space */
+  margin: 5px; /* Add a little space */
   padding: 0; /* Remove padding */
 }
 
@@ -41,14 +43,14 @@
   color: white;
   font-family: "Open Sans", sans-serif;
   font-weight: 700;
-  font-size: 32px;
+  font-size: 25px;
 }
 
 .value {
-  color: white;
+  color: #e6007e;
   font-family: "Open Sans", sans-serif;
   font-weight: 700;
-  font-size: 40px;
+  font-size: 50px;
 }
 
 .circles {
@@ -71,17 +73,24 @@
 .circle {
   border: 8px solid white;
   border-radius: 50%;
-  width: 264px;
-  height: 264px;
+  width: 310px;
+  height: 310px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 24px;
+  margin: 12px;
+  margin-top: 40px;
+}
+
+.circle:nth-child(1) {
+  margin-bottom: -20px;
 }
 
 .circle:last-child {
   margin-top: auto;
+  overflow: auto;
+  margin-bottom: -20px;
 }
 
 @media screen and (max-width: 1024px) {

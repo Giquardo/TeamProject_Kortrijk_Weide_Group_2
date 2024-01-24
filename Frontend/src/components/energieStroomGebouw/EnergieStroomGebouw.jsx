@@ -101,13 +101,15 @@ const EnergieStroomGebouw = ({ info }) => {
           <div className="energiestroom-circle">
             Realtime Verbruik
             <div className="circle-variable">
-              {dailyRealtime ? dailyRealtime.consumption : "Loading..."}
+              {dailyRealtime
+                ? `${dailyRealtime.consumption} kWh`
+                : "Loading..."}
             </div>
           </div>
           <div className="energiestroom-circle">
             Productie
             <div className="circle-variable">
-              {dailyRealtime ? dailyRealtime.production : "Loading..."}
+              {dailyRealtime ? `${dailyRealtime.production} kWh` : "Loading..."}
             </div>
           </div>
         </div>

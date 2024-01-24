@@ -33,24 +33,25 @@
 .energiestroom-circle {
   border: 8px solid white;
   border-radius: 50%;
-  width: 320px;
-  height: 320px;
+  width: 310px;
+  height: 310px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-direction: horizontal;
-  margin: 24px;
+  margin: 12px;
   font-family: "Open Sans", sans-serif;
   font-weight: 700;
-  font-size: 32px;
+  font-size: 25px;
 }
 
 .circle-variable {
   margin-top: 10px;
+  color: #e6007e;
   font-family: "Open Sans", sans-serif;
   font-weight: 700;
-  font-size: 40px;
+  font-size: 50px;
 }
 
 .energiestroom-info-container {

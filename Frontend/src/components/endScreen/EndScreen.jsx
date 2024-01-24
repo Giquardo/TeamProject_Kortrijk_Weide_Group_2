@@ -1,8 +1,8 @@
 import React from "react";
 import "./EndScreen.css";
-import logo from "../../Images/Label-Powered-by-Howest_WIT+LIJNTJES.png";
-import logo1 from "../../Images/Opleidingslogo_Howest_Multimedia_en_Communicatietechnologie_liggend_WIT.png";
-import logo2 from "../../Images/Opleidingslogo_Howest_Energiemanagement_liggend_WIT.png";
+import logo from "../../Images/Logo/Label-Powered-by-Howest_WIT+LIJNTJES.png";
+import logo1 from "../../Images/Logo/Opleidingslogo_Howest_Multimedia_en_Creative_Technologies_liggend_WIT.png";
+import logo2 from "../../Images/Logo/Opleidingslogo_Howest_Energiemanagement_liggend_WIT.png";
 
 const EndScreen = () => {
   return (
