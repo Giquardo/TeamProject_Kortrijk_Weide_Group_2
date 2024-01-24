@@ -11,26 +11,32 @@ const EnergieStroomGebouw = ({ info }) => {
     setIsLoadingConsumption(true);
     setIsLoadingProduction(true);
     Promise.all([
-      fetch(`http://localhost:5000/api/Buildingdata/buildingspecific/${info.id}`),
-      fetch(`http://localhost:5000/api/LiveData/Liveoverview/${info.id}`)
+      fetch(
+        `http://localhost:5000/api/Buildingdata/buildingspecific/${info.id}`
+      ),
+      fetch(`http://localhost:5000/api/LiveData/Liveoverview/${info.id}`),
     ])
       .then(async ([buildingRes, liveRes]) => {
         const buildingData = await buildingRes.json();
         let liveData = await liveRes.json();
-  
+
         // Flatten the liveData object into an array and add a building property to each data object
-        liveData = Object.values(liveData.liveoverview).flatMap((buildingData) =>
-          Object.entries(buildingData).flatMap(([building, data]) =>
-            data.map((item) => ({ ...item, building }))
-          )
+        liveData = Object.values(liveData.liveoverview).flatMap(
+          (buildingData) =>
+            Object.entries(buildingData).flatMap(([building, data]) =>
+              data.map((item) => ({ ...item, building }))
+            )
         );
-  
+
         // Combine or process the data as needed
-        const combinedData = [...buildingData.buildingspecificoverview, ...liveData];
+        const combinedData = [
+          ...buildingData.buildingspecificoverview,
+          ...liveData,
+        ];
         setData(combinedData);
         setIsLoadingConsumption(false);
         setIsLoadingProduction(false);
-  
+
         // Print the data
         console.log(combinedData);
       })
@@ -101,13 +107,17 @@ const EnergieStroomGebouw = ({ info }) => {
       ]
     : [];
 
-// Find the Realtime data for the current building
-const realtimeConsumption = data?.find((item) => item.type === "Realtime" && item.msrExtra === "Consumption");
-const realtimeProduction = data?.find((item) => item.type === "Realtime" && item.msrExtra === "Production");
+  // Find the Realtime data for the current building
+  const realtimeConsumption = data?.find(
+    (item) => item.type === "Realtime" && item.msrExtra === "Consumption"
+  );
+  const realtimeProduction = data?.find(
+    (item) => item.type === "Realtime" && item.msrExtra === "Production"
+  );
 
   return (
     <div className="energie-stroom-gebouw-container">
-      <h1 className="title title_extra">Energie Stroom</h1>
+      <h1 className="title">Energie Stroom</h1>
       <div className="building-container">
         <img
           className="building-image"
@@ -119,25 +129,25 @@ const realtimeProduction = data?.find((item) => item.type === "Realtime" && item
       <div className="energiestroom-info-container">
         <div className="energiestroom-circle-container">
           <div className="energiestroom-circle">
-        Realtime Verbruik
-        <div className="circle-variable">
-          {isLoadingConsumption
-            ? "Loading..."
-            : realtimeConsumption
-            ? `${realtimeConsumption.value} kW`
-            : "Geen data"}
-        </div>
-      </div>
-      <div className="energiestroom-circle">
-        Productie
-        <div className="circle-variable">
-          {isLoadingProduction
-            ? "Loading..."
-            : realtimeProduction
-            ? `${realtimeProduction.value} kW`
-            : "Geen data"}
-        </div>
-      </div>
+            Realtime Verbruik
+            <div className="circle-variable">
+              {isLoadingConsumption
+                ? "Loading..."
+                : realtimeConsumption
+                ? `${realtimeConsumption.value} kW`
+                : "Geen data"}
+            </div>
+          </div>
+          <div className="energiestroom-circle">
+            Productie
+            <div className="circle-variable">
+              {isLoadingProduction
+                ? "Loading..."
+                : realtimeProduction
+                ? `${realtimeProduction.value} kW`
+                : "Geen data"}
+            </div>
+          </div>
         </div>
         <div className="chart-container">
           <Chart

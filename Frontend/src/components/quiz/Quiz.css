@@ -19,8 +19,8 @@
   position: absolute;
   top: 64px;
   right: 0;
-  width: 256px;
-  height: 256px;
+  width: 230px;
+  height: 230px;
   padding: 0 5% 0 0;
   color: white;
 }
@@ -29,8 +29,8 @@
   position: absolute;
   top: 256px;
   right: 0;
-  width: 256px;
-  height: 256px;
+  width: 230px;
+  height: 230px;
   padding: 0 5% 0 0;
   color: white;
 }
@@ -38,14 +38,15 @@
 .vraag {
   position: relative;
   text-align: left;
-  font-size: 56px;
+  font-size: 45px;
   max-width: 70%;
+  margin-bottom: 0;
 }
 
 .antwoord {
   position: relative;
   text-align: left;
-  font-size: 32px;
+  font-size: 25px;
   margin-left: 10%;
   padding: 10px;
   width: 60%;
@@ -55,6 +56,10 @@
   background-color: #63d7ff;
   border-radius: 10px;
   padding: 10px 10px 10px 10px;
+}
+
+.antwoord p:last-child {
+  margin-bottom: 0;
 }
 
 .antwoord .right-answer {
@@ -88,6 +93,7 @@
 
 .verklaring {
   width: 100%;
+  font-size: 30px;
 }
 
 @media screen and (max-width: 1024px) {
