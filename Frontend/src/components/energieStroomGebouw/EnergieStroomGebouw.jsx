@@ -4,23 +4,43 @@ import Chart from "react-apexcharts";
 
 const EnergieStroomGebouw = ({ info }) => {
   const [data, setData] = useState(null);
+  const [isLoadingConsumption, setIsLoadingConsumption] = useState(true);
+  const [isLoadingProduction, setIsLoadingProduction] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/Buildingdata/buildingspecific/${info.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (
-          data &&
-          data.buildingspecificoverview &&
-          Array.isArray(data.buildingspecificoverview)
-        ) {
-          setData(data.buildingspecificoverview);
-        } else {
-          console.error("Unexpected API response:", data);
-        }
+    setIsLoadingConsumption(true);
+    setIsLoadingProduction(true);
+    Promise.all([
+      fetch(`http://localhost:5000/api/Buildingdata/buildingspecific/${info.id}`),
+      fetch(`http://localhost:5000/api/LiveData/Liveoverview/${info.id}`)
+    ])
+      .then(async ([buildingRes, liveRes]) => {
+        const buildingData = await buildingRes.json();
+        let liveData = await liveRes.json();
+  
+        // Flatten the liveData object into an array and add a building property to each data object
+        liveData = Object.values(liveData.liveoverview).flatMap((buildingData) =>
+          Object.entries(buildingData).flatMap(([building, data]) =>
+            data.map((item) => ({ ...item, building }))
+          )
+        );
+  
+        // Combine or process the data as needed
+        const combinedData = [...buildingData.buildingspecificoverview, ...liveData];
+        setData(combinedData);
+        setIsLoadingConsumption(false);
+        setIsLoadingProduction(false);
+  
+        // Print the data
+        console.log(combinedData);
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setIsLoadingConsumption(false);
+        setIsLoadingProduction(false);
+      });
   }, [info.id]);
+
   // Use the info prop directly
   const building = info;
 
@@ -69,7 +89,7 @@ const EnergieStroomGebouw = ({ info }) => {
         {
           name: "Verbruik",
           data: data
-            .filter((item) => item.type === "Realtime")
+            .filter((item) => item.type === "Data")
             .map((item) => item.consumption),
         },
         {
@@ -81,9 +101,9 @@ const EnergieStroomGebouw = ({ info }) => {
       ]
     : [];
 
-  const dailyRealtime =
-    data &&
-    data.find((item) => item.type === "Realtime" && item.period === "Week");
+// Find the Realtime data for the current building
+const realtimeConsumption = data?.find((item) => item.type === "Realtime" && item.msrExtra === "Consumption");
+const realtimeProduction = data?.find((item) => item.type === "Realtime" && item.msrExtra === "Production");
 
   return (
     <div className="energie-stroom-gebouw-container">
@@ -99,19 +119,25 @@ const EnergieStroomGebouw = ({ info }) => {
       <div className="energiestroom-info-container">
         <div className="energiestroom-circle-container">
           <div className="energiestroom-circle">
-            Realtime Verbruik
-            <div className="circle-variable">
-              {dailyRealtime
-                ? `${dailyRealtime.consumption} kWh`
-                : "Loading..."}
-            </div>
-          </div>
-          <div className="energiestroom-circle">
-            Productie
-            <div className="circle-variable">
-              {dailyRealtime ? `${dailyRealtime.production} kWh` : "Loading..."}
-            </div>
-          </div>
+        Realtime Verbruik
+        <div className="circle-variable">
+          {isLoadingConsumption
+            ? "Loading..."
+            : realtimeConsumption
+            ? `${realtimeConsumption.value} kW`
+            : "Geen data"}
+        </div>
+      </div>
+      <div className="energiestroom-circle">
+        Productie
+        <div className="circle-variable">
+          {isLoadingProduction
+            ? "Loading..."
+            : realtimeProduction
+            ? `${realtimeProduction.value} kW`
+            : "Geen data"}
+        </div>
+      </div>
         </div>
         <div className="chart-container">
           <Chart

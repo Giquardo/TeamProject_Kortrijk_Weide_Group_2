@@ -63,7 +63,7 @@ namespace TeamProject.Controllers
                     var kortrijkWeideTablesInjection = await client.GetQueryApi().QueryAsync(query.Value[5], org);
                     var kortrijkWeideTablesProductionWKK = await client.GetQueryApi().QueryAsync(query.Value[6], org);
                     var kortrijkWeideTablesProductionPV = await client.GetQueryApi().QueryAsync(query.Value[7], org);
-            
+
                     double totalAfnameRef = 0;
                     double totalAfname = 0;
                     double totalProductionRef = 0;
@@ -77,7 +77,7 @@ namespace TeamProject.Controllers
                     double totalConsumptionRef = 0;
                     double totalConsumption = 0;
                     double totalEigenVerbruik = 0;
-        
+
                     foreach (var table in kortrijkWeideTablesAfnameRef)
                     {
                         foreach (var record in table.Records)
@@ -132,7 +132,7 @@ namespace TeamProject.Controllers
                         }
                     }
 
-                     foreach (var table in kortrijkWeideTablesProductionPVRef)
+                    foreach (var table in kortrijkWeideTablesProductionPVRef)
                     {
                         foreach (var record in table.Records)
                         {
@@ -151,7 +151,7 @@ namespace TeamProject.Controllers
                     }
 
                     //afname
-                    totalAfnameRef= Math.Round(totalAfnameRef, 2);
+                    totalAfnameRef = Math.Round(totalAfnameRef, 2);
                     totalAfname = Math.Round(totalAfname, 2);
                     //injectie
                     totalInjectionRef = Math.Round(totalInjectionRef, 2);
@@ -169,7 +169,17 @@ namespace TeamProject.Controllers
                     //eigen verbruik
                     totalEigenVerbruik = Math.Round(totalProduction - totalInjection, 2);
 
-                    var data = new { Period = query.Key, ReferenceConsumption = totalConsumptionRef, Consumption = totalConsumption, ReferenceProduction = totalProductionRef, Production = totalProduction, ReferenceInjection = totalInjectionRef, Injection = totalInjection, EigenVerbruik = totalEigenVerbruik};
+                    var data = new
+                    {
+                        Period = query.Key,
+                        ReferenceConsumption = totalConsumptionRef.ToString("N2"),
+                        Consumption = totalConsumption.ToString("N2"),
+                        ReferenceProduction = totalProductionRef.ToString("N2"),
+                        Production = totalProduction.ToString("N2"),
+                        ReferenceInjection = totalInjectionRef.ToString("N2"),
+                        Injection = totalInjection.ToString("N2"),
+                        EigenVerbruik = totalEigenVerbruik.ToString("N2")
+                    };
 
                     results["generaloverview"].Add(data);
                 }
@@ -250,7 +260,14 @@ namespace TeamProject.Controllers
                     totalProduction = Math.Round(totalProduction_WKK + totalProduction_PV, 2);
                     totalInjection = Math.Round(totalInjection, 2);
 
-                    var data = new { Period = query.Key, Production_WKK = totalProduction_WKK, Production_PV = totalProduction_PV, Production_Total = totalProduction, Injection = totalInjection };
+                    var data = new
+                    {
+                        Period = query.Key,
+                        Production_WKK = totalProduction_WKK.ToString("N2"),
+                        Production_PV = totalProduction_PV.ToString("N2"),
+                        Production_Total = totalProduction.ToString("N2"),
+                        Injection = totalInjection.ToString("N2")
+                    };
 
                     results["productionoverview"].Add(data);
                 }

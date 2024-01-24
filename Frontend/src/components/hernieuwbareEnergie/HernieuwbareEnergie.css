@@ -80,7 +80,7 @@
   align-items: center;
   flex-direction: column;
   margin: 12px;
-  margin-top: 40px;
+  margin-top: 0px;
 }
 
 .circle:nth-child(1) {

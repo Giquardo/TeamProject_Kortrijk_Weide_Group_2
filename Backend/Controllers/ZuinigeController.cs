@@ -57,7 +57,7 @@ namespace TeamProject.Controllers
                 var kortrijkWeideTablesInjection = await client.GetQueryApi().QueryAsync(query.Value[1], org);
                 var kortrijkWeideTablesProductionWKK = await client.GetQueryApi().QueryAsync(query.Value[2], org);
                 var kortrijkWeideTablesProductionPV = await client.GetQueryApi().QueryAsync(query.Value[3], org);
-        
+
                 double totalAfname = 0;
                 double totalProduction = 0;
                 double totalProductionWKK = 0;
@@ -114,11 +114,25 @@ namespace TeamProject.Controllers
 
                 if (soort.ToLower() == "pv")
                 {
-                    data = new { Type = "PV", Period = query.Key, Consumption = totalConsumption, Production = totalProductionPV, EigenVerbruik = totalEigenVerbruik };
+                    data = new
+                    {
+                        Type = "PV",
+                        Period = query.Key,
+                        Consumption = totalConsumption.ToString("N2"),
+                        Production = totalProductionPV.ToString("N2"),
+                        EigenVerbruik = totalEigenVerbruik.ToString("N2")
+                    };
                 }
                 else if (soort.ToLower() == "wkk")
                 {
-                    data = new { Type = "WKK", Period = query.Key, Consumption = totalConsumption, Production = totalProductionWKK , EigenVerbruik = totalEigenVerbruik};
+                    data = new
+                    {
+                        Type = "WKK",
+                        Period = query.Key,
+                        Consumption = totalConsumption.ToString("N2"),
+                        Production = totalProductionWKK.ToString("N2"),
+                        EigenVerbruik = totalEigenVerbruik.ToString("N2")
+                    };
                 }
                 else
                 {
@@ -127,12 +141,12 @@ namespace TeamProject.Controllers
 
                 results["zuinigeoverview"].Add(data);
             }
-                
+
             return Ok(new
             {
                 zuinigeoverview = results["zuinigeoverview"]
             });
-            
+
         }
     }
 }

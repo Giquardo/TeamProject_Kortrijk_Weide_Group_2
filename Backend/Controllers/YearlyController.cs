@@ -63,7 +63,7 @@ namespace TeamProject.Controllers
                     var kortrijkWeideTablesInjection = await client.GetQueryApi().QueryAsync(query.Value[5], org);
                     var kortrijkWeideTablesProductionWKK = await client.GetQueryApi().QueryAsync(query.Value[6], org);
                     var kortrijkWeideTablesProductionPV = await client.GetQueryApi().QueryAsync(query.Value[7], org);
-            
+
                     double totalAfnameRef = 0;
                     double totalAfname = 0;
                     double totalProductionRef = 0;
@@ -76,7 +76,7 @@ namespace TeamProject.Controllers
                     double totalInjection = 0;
                     double totalConsumptionRef = 0;
                     double totalConsumption = 0;
-        
+
                     foreach (var table in kortrijkWeideTablesAfnameRef)
                     {
                         foreach (var record in table.Records)
@@ -131,7 +131,7 @@ namespace TeamProject.Controllers
                         }
                     }
 
-                     foreach (var table in kortrijkWeideTablesProductionPVRef)
+                    foreach (var table in kortrijkWeideTablesProductionPVRef)
                     {
                         foreach (var record in table.Records)
                         {
@@ -149,7 +149,7 @@ namespace TeamProject.Controllers
                         }
                     }
 
-                    totalAfnameRef= Math.Round(totalAfnameRef, 2);
+                    totalAfnameRef = Math.Round(totalAfnameRef, 2);
                     totalAfname = Math.Round(totalAfname, 2);
                     totalInjectionRef = Math.Round(totalInjectionRef, 2);
                     totalInjection = Math.Round(totalInjection, 2);
@@ -162,7 +162,16 @@ namespace TeamProject.Controllers
                     totalConsumptionRef = Math.Round(totalAfnameRef + (totalProductionRef - totalInjectionRef), 2);
                     totalConsumption = Math.Round(totalAfname + (totalProduction - totalInjection), 2);
 
-                    var data = new { Period = query.Key, ReferenceConsumption = totalConsumptionRef, Consumption = totalConsumption, ReferenceProduction = totalProductionRef, Production = totalProduction, ReferenceInjection = totalInjectionRef, Injection = totalInjection};
+                    var data = new
+                    {
+                        Period = query.Key,
+                        ReferenceConsumption = totalConsumptionRef.ToString("N2"),
+                        Consumption = totalConsumption.ToString("N2"),
+                        ReferenceProduction = totalProductionRef.ToString("N2"),
+                        Production = totalProduction.ToString("N2"),
+                        ReferenceInjection = totalInjectionRef.ToString("N2"),
+                        Injection = totalInjection.ToString("N2")
+                    };
 
                     results["generaloverview"].Add(data);
                 }

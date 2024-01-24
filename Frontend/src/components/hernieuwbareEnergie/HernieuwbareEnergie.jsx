@@ -5,7 +5,7 @@ import "../General.css";
 const Circle = ({ title, value }) => (
   <div className="circle">
     <p className="value-type">{title}</p>
-    <p className="value">{value ? `${value} kWh` : "Loading..."}</p>
+    <p className="value">{value ? `${value} kW` : "Loading..."}</p>
   </div>
 );
 

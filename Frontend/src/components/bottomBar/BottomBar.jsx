@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { IoExpand, IoPlayCircleOutline, IoArrowBack, IoArrowForward } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { IoExpand, IoPlayCircleOutline, IoPauseCircleOutline, IoArrowBack, IoArrowForward } from "react-icons/io5";
 import './BottomBar.css';
 
 const BottomBar = ({  onPlay, navigate, currentIndex, totalNumberOfPages, routes  }) => {
   const [isVisible, setIsVisible] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false); // New state variable
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -12,6 +12,11 @@ const BottomBar = ({  onPlay, navigate, currentIndex, totalNumberOfPages, routes
     }, 5000);
     return () => clearTimeout(timeout);
   }, []);
+
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying); // Toggle play/pause state
+    onPlay(); // Call the onPlay prop function
+  };
 
   const goFullScreen = () => {
     if (document.fullscreenElement) {
@@ -49,7 +54,10 @@ const BottomBar = ({  onPlay, navigate, currentIndex, totalNumberOfPages, routes
 
   return (
     <div className={`bottom-bar ${isVisible ? 'visible' : ''}`} onMouseEnter={() => setIsVisible(true)} onMouseLeave={() => setIsVisible(false)}>
-      <IoPlayCircleOutline className="play-icon" onClick={onPlay} />
+      {isPlaying ? 
+        <IoPauseCircleOutline className="play-icon" onClick={handlePlayPause} /> : 
+        <IoPlayCircleOutline className="play-icon" onClick={handlePlayPause} />
+      }
       <div>
         <IoArrowBack className="arrow-icon" onClick={goBack} />
         <IoArrowForward className="arrow-icon" onClick={goForward} />

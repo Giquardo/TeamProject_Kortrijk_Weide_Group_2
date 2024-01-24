@@ -35,7 +35,7 @@ namespace TeamProject.Controllers
 
                 // Building-Specific Queries
                 var buildingSpecificQueries = new Dictionary<string, List<string>>
-                {   
+                {
                     {"Week", new List<string> {
                         $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Afname$/ and r[\"Meter_ID\"] =~ /{buildingName}/)",
                         $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Injectie$/ and r[\"Meter_ID\"] =~ /{buildingName}/)",
@@ -113,7 +113,13 @@ namespace TeamProject.Controllers
                     totalConsumption = Math.Round(totalConsumption, 2);
                     totalProductie = Math.Round(totalProductie, 2);
                     // For the current period
-                    var data = new { Type = "Realtime", Period = query.Key, Consumption = totalConsumption, Production = totalProductie };
+                    var data = new
+                    {
+                        Type = "Data",
+                        Period = query.Key,
+                        Consumption = totalConsumption.ToString("N2"),
+                        Production = totalProductie.ToString("N2")
+                    };
                     results["buildingspecificoverview"].Add(data);
                 }
                 // Execute the queries for the previous periods and calculate the total consumption and production
@@ -157,7 +163,13 @@ namespace TeamProject.Controllers
 
 
                     // For the previous period
-                    var data = new { Type = "Referentie", Period = query.Key, Consumption = previousTotalConsumption, Production = previousTotalProductie };
+                    var data = new
+                    {
+                        Type = "Referentie",
+                        Period = query.Key,
+                        Consumption = previousTotalConsumption.ToString("N2"),
+                        Production = previousTotalProductie.ToString("N2")
+                    };
                     results["buildingspecificoverview"].Add(data);
                 }
                 return Ok(new
