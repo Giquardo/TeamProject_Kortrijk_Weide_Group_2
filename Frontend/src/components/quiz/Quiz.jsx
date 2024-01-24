@@ -4,7 +4,7 @@ import vragen from "../../data/vragen.js";
 import Lottie from "lottie-react";
 import timer from "../../animations/timer.json";
 import timerTeken from "../../animations/timerTeken.json";
-
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 
 const Quiz = () => {
   const ref = useRef(null);
@@ -36,6 +36,7 @@ const Quiz = () => {
 
   return (
     <>
+      <h1 className="title title_extra">Quiz</h1>
       {randomQuestion && (
         <div className="container">
           <div className="text-content">
@@ -43,23 +44,48 @@ const Quiz = () => {
             <div className="antwoord">
               {randomQuestion.antwoorden.map((antwoord) => (
                 <div key={antwoord.key}>
-                  <p className={showCorrectAnswer && antwoord.key !== randomQuestion.correctAntwoord ? 'wrong-answer' : ''}>
+                  <p
+                    className={
+                      showCorrectAnswer &&
+                      antwoord.key === randomQuestion.correctAntwoord
+                        ? "right-answer"
+                        : ""
+                    }
+                  >
                     {antwoord.key}. {antwoord.text}
+                    {showCorrectAnswer &&
+                      antwoord.key === randomQuestion.correctAntwoord && (
+                        <IoCheckmarkCircleOutline className="checkmark" />
+                      )}
                   </p>
                 </div>
               ))}
             </div>
-            {showCorrectAnswer && <p className="verklaring">Verklaring: {randomQuestion.verklaring}</p>}
+            {showCorrectAnswer && (
+              <p className="verklaring">
+                Verklaring: {randomQuestion.verklaring}
+              </p>
+            )}
           </div>
           <div className="timer-container">
             {!timerFinished && (
               <div className="timer">
-                <Lottie animationData={timer} loop={false} autoplay={true} onComplete={handleAnimationComplete} />
+                <Lottie
+                  animationData={timer}
+                  loop={false}
+                  autoplay={true}
+                  onComplete={handleAnimationComplete}
+                />
               </div>
             )}
             {!timerFinished && (
               <div className="timerTeken">
-                <Lottie animationData={timerTeken} loop={true} autoplay={true} onComplete={handleAnimationComplete} />
+                <Lottie
+                  animationData={timerTeken}
+                  loop={true}
+                  autoplay={true}
+                  onComplete={handleAnimationComplete}
+                />
               </div>
             )}
           </div>

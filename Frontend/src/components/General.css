@@ -1,10 +1,19 @@
 .title {
-    position: absolute;
-    top: 0;
-    left: 64px;
-    text-align: left;
-    color: black;
-    font-family: "VAG Rounded Bold";
-    font-size: 96px;
-    z-index: 1;
-  }
+  position: absolute;
+  top: 0;
+  left: 64px;
+  text-align: left;
+  color: black;
+  font-family: "VAG Rounded Bold";
+  font-size: 96px;
+  z-index: 1;
+}
+
+.title_extra {
+  left: 0;
+  text-align: left;
+  width: 40%;
+  height: auto;
+  padding: 0 0 0 5%;
+  word-wrap: break-word; /* Add this line */
+}

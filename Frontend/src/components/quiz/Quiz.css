@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  max-width: 100%;  
+  max-width: 100%;
 }
 
 .timer-container {
@@ -47,14 +47,29 @@
   text-align: left;
   font-size: 32px;
   margin-left: 10%;
+  padding: 10px;
+  width: 60%;
 }
 
-.wrong-answer {
-  position: relative;
-  text-align: left;
-  color: black;
-  text-decoration: line-through;
-  font-size: 24px;
+.antwoord p {
+  background-color: #63d7ff;
+  border-radius: 10px;
+  padding: 10px 10px 10px 10px;
+}
+
+.antwoord .right-answer {
+  background-color: #e6007e;
+  border-radius: 10px;
+  padding: 10px 10px 10px 10px;
+}
+
+.checkmark {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  right: 0;
+  padding: 0 5% 0 0;
+  color: white;
 }
 
 .text-content {
@@ -62,16 +77,76 @@
   top: 0;
   text-align: left;
   color: white;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 600; /* This sets the font weight to semibold */  
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600; /* This sets the font weight to semibold */
   font-size: 40px;
-  margin-left: 20%;  
-  max-width: 100%; 
+  margin-left: 20%;
+  max-width: 100%;
   word-wrap: break-word; /* This will break the word to next line */
   overflow-wrap: break-word; /* This will break the word to next line */
 }
 
 .verklaring {
-  
-  width: 100%; 
+  width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+  .title_extra {
+    width: 100%;
+    height: 50%;
+    padding: 0;
+    font-size: 50px;
+    text-align: center;
+  }
+
+  .vraag {
+    position: relative;
+    text-align: left;
+    padding-top: 80px;
+    font-size: 35px;
+    max-width: 90%;
+  }
+
+  .antwoord {
+    position: relative;
+    top: 270%;
+    text-align: left;
+    font-size: 25px;
+    margin-left: 10%;
+    padding: 10px;
+    width: 60%;
+  }
+
+  .checkmark {
+    width: 30px;
+    padding: 0 5% 0 0;
+    color: white;
+  }
+
+  .verklaring {
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    font-size: 30px;
+  }
+
+  .timer {
+    position: absolute;
+    top: 250px;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    padding: 0 7% 0 0;
+    color: white;
+  }
+
+  .timerTeken {
+    position: absolute;
+    top: 300px;
+    right: 0;
+    width: 160px;
+    height: 160px;
+    padding: 0 3% 0 0;
+    color: white;
+  }
 }

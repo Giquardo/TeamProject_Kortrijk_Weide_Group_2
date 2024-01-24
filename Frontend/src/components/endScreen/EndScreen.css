@@ -1,42 +1,42 @@
 .end-screen-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    max-width: 100%;  
-    position: relative;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  max-width: 100%;
+  position: relative;
+}
+
 .howest-logo {
-    width: 25%;
-    height: auto;
-    z-index: 1;
-    position: absolute;
-    top: 32px;
-    right: 32px;
-  }
-  
+  width: 12%;
+  height: auto;
+  z-index: 1;
+  position: absolute;
+  top: 32px;
+  right: 32px;
+}
+
 .middle-logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
 .middle-logo {
-    width: 25%;
-    height: auto;
-  }
-  
+  width: 25%;
+  height: auto;
+}
+
 .and-text {
-    font-size: 48px;
-    font-family: "VAG Rounded Bold"; 
-    }
+  font-size: 40px;
+  font-family: "VAG Rounded Bold";
+}
 
 .collaboration-text {
-    font-size: 48px; /* adjust as needed */
-    text-align: center;
-    margin-bottom: 20px; /* adjust as needed */
-    font-family: "VAG Rounded Bold"; 
+  font-size: 48px; /* adjust as needed */
+  text-align: center;
+  margin-bottom: 60px; /* adjust as needed */
+  font-family: "VAG Rounded Bold";
 }
