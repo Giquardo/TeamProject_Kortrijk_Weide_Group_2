@@ -36,117 +36,56 @@ namespace TeamProject.Controllers
 
             using var client = InfluxDBClientFactory.Create("http://howest-energy-monitoring.westeurope.cloudapp.azure.com:8087", token);
 
-
             // Zuinige Overview Queries
             var zuinigeoverview = new Dictionary<string, List<string>>
             {
                 {"Week", new List<string> {
-                    $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Afname$/)",
-                    $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Injectie$/)",
-                    $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_WKK.*/)",
-                    $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_PV.*/)"
+                    $"from(bucket: \"{bucket}\") |> range(start: -1y) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_{soort}$/) |> aggregateWindow(every: 1mo, fn: sum, createEmpty: false)"
                 }}
             };
-            var results = new Dictionary<string, List<object>>();
+            var results = new Dictionary<string, Dictionary<string, double>>();
 
             // Zuinige Overview
-            results["zuinigeoverview"] = new List<object>();
+            results["zuinigeoverview"] = new Dictionary<string, double>();
             foreach (var query in zuinigeoverview)
             {
-                var kortrijkWeideTablesAfname = await client.GetQueryApi().QueryAsync(query.Value[0], org);
-                var kortrijkWeideTablesInjection = await client.GetQueryApi().QueryAsync(query.Value[1], org);
-                var kortrijkWeideTablesProductionWKK = await client.GetQueryApi().QueryAsync(query.Value[2], org);
-                var kortrijkWeideTablesProductionPV = await client.GetQueryApi().QueryAsync(query.Value[3], org);
+                var kortrijkWeideTables = await client.GetQueryApi().QueryAsync(query.Value[0], org);
 
-                double totalAfname = 0;
-                double totalProduction = 0;
-                double totalProductionWKK = 0;
-                double totalProductionPV = 0;
-                double totalInjection = 0;
-                double totalConsumption = 0;
-                double totalEigenVerbruik = 0;
-
-                foreach (var table in kortrijkWeideTablesAfname)
+                foreach (var table in kortrijkWeideTables)
                 {
                     foreach (var record in table.Records)
                     {
-                        var value = Convert.ToDouble(record.GetValueByKey("_value"));
-                        totalAfname += value;
+                        var time = DateTime.Parse(record.GetValueByKey("_time").ToString());
+                        var month = time.ToString("MMMM");
+                        var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+
+                        if (results["zuinigeoverview"].ContainsKey(month))
+                        {
+                            results["zuinigeoverview"][month] += value;
+                        }
+                        else
+                        {
+                            results["zuinigeoverview"].Add(month, value);
+                        }
                     }
                 }
+            }
 
-                foreach (var table in kortrijkWeideTablesInjection)
+            var output = new List<object>();
+            foreach (var item in results["zuinigeoverview"])
+            {
+                output.Add(new
                 {
-                    foreach (var record in table.Records)
-                    {
-                        var value = Convert.ToDouble(record.GetValueByKey("_value"));
-                        totalInjection += value;
-                    }
-                }
-
-                foreach (var table in kortrijkWeideTablesProductionWKK)
-                {
-                    foreach (var record in table.Records)
-                    {
-                        var value = Convert.ToDouble(record.GetValueByKey("_value"));
-                        totalProductionWKK += value;
-                    }
-                }
-
-                foreach (var table in kortrijkWeideTablesProductionPV)
-                {
-                    foreach (var record in table.Records)
-                    {
-                        var value = Convert.ToDouble(record.GetValueByKey("_value"));
-                        totalProductionPV += value;
-                    }
-                }
-
-                totalAfname = Math.Round(totalProduction, 2);
-                totalInjection = Math.Round(totalInjection, 2);
-                totalProductionWKK = Math.Round(totalProductionWKK, 2);
-                totalProductionPV = Math.Round(totalProductionPV, 2);
-                totalProduction = Math.Round(totalProductionWKK + totalProductionPV, 2);
-                totalConsumption = Math.Round(totalAfname + (totalProduction - totalInjection), 2);
-                totalEigenVerbruik = Math.Round(totalProduction - totalInjection, 2);
-
-                var data = new object();
-
-                if (soort.ToLower() == "pv")
-                {
-                    data = new
-                    {
-                        Type = "PV",
-                        Period = query.Key,
-                        Consumption = totalConsumption.ToString("N2"),
-                        Production = totalProductionPV.ToString("N2"),
-                        EigenVerbruik = totalEigenVerbruik.ToString("N2")
-                    };
-                }
-                else if (soort.ToLower() == "wkk")
-                {
-                    data = new
-                    {
-                        Type = "WKK",
-                        Period = query.Key,
-                        Consumption = totalConsumption.ToString("N2"),
-                        Production = totalProductionWKK.ToString("N2"),
-                        EigenVerbruik = totalEigenVerbruik.ToString("N2")
-                    };
-                }
-                else
-                {
-                    return BadRequest(new { message = $"Invalid soort parameter: {soort}. It should be either 'PV' or 'WKK'." });
-                }
-
-                results["zuinigeoverview"].Add(data);
+                    Type = soort,
+                    Month = item.Key,
+                    Production = item.Value.ToString("N2")
+                });
             }
 
             return Ok(new
             {
-                zuinigeoverview = results["zuinigeoverview"]
+                zuinigeoverview = output
             });
-
         }
     }
 }
