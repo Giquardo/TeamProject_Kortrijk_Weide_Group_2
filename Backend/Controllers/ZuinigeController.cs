@@ -78,7 +78,7 @@ namespace TeamProject.Controllers
                 {
                     Type = soort,
                     Month = item.Key,
-                    Production = item.Value.ToString("N2")
+                    Production = Math.Round(item.Value).ToString("N0")
                 });
             }
 

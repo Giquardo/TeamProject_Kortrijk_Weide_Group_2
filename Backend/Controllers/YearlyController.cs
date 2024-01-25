@@ -117,10 +117,10 @@ namespace TeamProject.Controllers
                     var data = new
                     {
                         Period = query.Key,
-                        Consumption = totalConsumption.ToString("N2"),
-                        Production = totalProduction.ToString("N2"),
-                        Injection = totalInjection.ToString("N2"),
-                        EigenVerbruik = totalEigenVerbruik.ToString("N2")
+                        Consumption = totalConsumption.ToString("N0"),
+                        Production = totalProduction.ToString("N0"),
+                        Injection = totalInjection.ToString("N0"),
+                        EigenVerbruik = totalEigenVerbruik.ToString("N0")
                     };
 
                     results["generaloverview"].Add(data);
@@ -202,7 +202,15 @@ namespace TeamProject.Controllers
                     totalProduction = Math.Round(totalProduction_WKK + totalProduction_PV, 2);
                     totalInjection = Math.Round(totalInjection, 2);
 
-                    var data = new { Period = query.Key, Production_WKK = totalProduction_WKK, Production_PV = totalProduction_PV, Production_Total = totalProduction, Injection = totalInjection };
+                    var data = new
+                    {
+                        Period = query.Key,
+                        Production_WKK = totalProduction_WKK.ToString("N0"),
+                        Production_PV = totalProduction_PV.ToString("N0"),
+                        Production_Total = totalProduction.ToString("N0"),
+                        Injection = totalInjection.ToString("N0")
+                    };
+
 
                     results["productionoverview"].Add(data);
                 }
