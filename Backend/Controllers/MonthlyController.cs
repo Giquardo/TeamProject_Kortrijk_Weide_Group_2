@@ -126,7 +126,7 @@ namespace TeamProject.Controllers
                 }
                 return Ok(new
                 {
-                    productionoverview = results["generaloverview"]
+                    generaloverview = results["generaloverview"]
                 });
             }
             catch (Exception ex)

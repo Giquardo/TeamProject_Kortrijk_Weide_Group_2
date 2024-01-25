@@ -57,7 +57,7 @@ namespace TeamProject.Controllers
                             TimeZoneInfo brusselsTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Romance Standard Time");
                             var timestamp = TimeZoneInfo.ConvertTimeFromUtc(timestampUtc, brusselsTimeZone);
 
-                            var valueObject = record.GetValueByKey("_value");
+                            var valueObject = record.GetValueByKey("_value")/4;
                             var value = Math.Round(Convert.ToDouble(valueObject), 2);
 
                             // Get the msr_extra value
