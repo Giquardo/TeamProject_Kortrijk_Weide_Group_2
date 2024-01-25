@@ -1,12 +1,14 @@
 version: '3'
 services:
   frontend:
-    build: ./Frontend
-    image: xandervh/frontend
+    build: 
+      context: ./Frontend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
   backend:
-    build: ./Backend
-    image: xandervh/backend
+    build: 
+      context: ./Backend
+      dockerfile: Dockerfile
     ports:
       - "8000:80"
