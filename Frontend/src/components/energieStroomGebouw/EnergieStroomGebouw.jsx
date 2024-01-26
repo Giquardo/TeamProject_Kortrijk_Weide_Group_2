@@ -55,17 +55,18 @@ const EnergieStroomGebouw = ({ info }) => {
     chart: {
       type: "bar",
       height: 300,
+      width: 450,
     },
     plotOptions: {
       bar: {
-        horizontal: true,
+        horizontal: false,
       },
     },
     xaxis: {
-      categories: ["Week", "Maand", "Jaar"],
+      categories: Array.from({ length: 30 }, (_, i) => (i + 1).toString()),
       labels: {
         style: {
-          colors: ["#ffffff"],
+          colors: ["#000000"],
           fontSize: "10px",
         },
       },
@@ -73,15 +74,21 @@ const EnergieStroomGebouw = ({ info }) => {
     yaxis: {
       labels: {
         style: {
-          colors: ["#ffffff"],
+          colors: ["#000000"],
           fontSize: "16px",
         },
       },
     },
-    colors: ["#ffffff", "#e6007e"],
+    legend: {
+      show: true,
+      position: "bottom",
+      horizontalAlign: "center",
+      showForSingleSeries: true,
+    },
+    colors: ["#e6007e"],
     dataLabels: {
       enabled: true,
-      textAnchor: "start", // Position the labels next to the bars
+      textAnchor: "middle", // Position the labels next to the bars
       style: {
         colors: ["#000000"],
         fontSize: "16px",
@@ -93,15 +100,9 @@ const EnergieStroomGebouw = ({ info }) => {
   const series = data
     ? [
         {
-          name: "Verbruik",
+          name: "Verbruik per dag",
           data: data
             .filter((item) => item.type === "Data")
-            .map((item) => item.consumption),
-        },
-        {
-          name: "Referentie",
-          data: data
-            .filter((item) => item.type === "Referentie")
             .map((item) => item.consumption),
         },
       ]
@@ -134,7 +135,7 @@ const EnergieStroomGebouw = ({ info }) => {
               {isLoadingConsumption
                 ? "Loading..."
                 : realtimeConsumption
-                ? `${realtimeConsumption.value} kW`
+                ? `${realtimeConsumption.value} kWh`
                 : "Geen data"}
             </div>
           </div>
@@ -144,7 +145,7 @@ const EnergieStroomGebouw = ({ info }) => {
               {isLoadingProduction
                 ? "Loading..."
                 : realtimeProduction
-                ? `${realtimeProduction.value} kW`
+                ? `${realtimeProduction.value} kWh`
                 : "Geen data"}
             </div>
           </div>
@@ -156,6 +157,7 @@ const EnergieStroomGebouw = ({ info }) => {
             series={series}
             type="bar"
             height={350}
+            width={700}
           />
         </div>
       </div>

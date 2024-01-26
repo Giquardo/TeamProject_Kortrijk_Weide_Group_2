@@ -40,3 +40,24 @@
   margin-bottom: 60px; /* adjust as needed */
   font-family: "VAG Rounded Bold";
 }
+
+.bottom-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 10px;
+}
+
+.bottom-logo {
+  width: 15%;
+  height: auto;
+}
+
+.bottom-text {
+  flex-direction: column;
+  font-size: 48px;
+  font-family: "VAG Rounded Bold";
+  text-align: left;
+  margin-top: 150px; /* adjust as needed */
+}

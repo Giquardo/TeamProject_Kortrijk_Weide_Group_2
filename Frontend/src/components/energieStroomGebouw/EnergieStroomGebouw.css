@@ -8,13 +8,13 @@
 }
 
 .building-image {
-  width: 80%;
+  width: 65%;
   height: auto;
 }
 
 .building-title {
   text-align: center;
-  color: white;
+  color: black;
   font-family: "VAG Rounded Light";
   font-size: 48px;
   margin-top: 20px;
@@ -38,7 +38,7 @@
 }
 
 .energiestroom-circle {
-  border: 8px solid white;
+  border: 8px solid black;
   border-radius: 50%;
   width: 260px;
   height: 260px;
@@ -49,8 +49,9 @@
   flex-direction: horizontal;
   margin: 12px;
   font-family: "Open Sans", sans-serif;
+  color: black;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .circle-variable {
@@ -79,14 +80,14 @@
 
 @media screen and (max-width: 1024px) {
   .circle-variable {
-    color: white;
+    color: black;
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     font-size: 25px;
   }
 
   .energiestroom-circle {
-    color: white;
+    color: black;
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     font-size: 20px;
@@ -117,7 +118,7 @@
 
   .building-title {
     text-align: center;
-    color: white;
+    color: black;
     font-family: "VAG Rounded Light";
     font-size: 30px;
   }

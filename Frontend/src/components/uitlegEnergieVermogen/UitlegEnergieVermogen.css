@@ -16,7 +16,7 @@
 
 .uitleg-text {
   position: absolute;
-  color: white;
+  color: black;
   font-family: "Open Sans", sans-serif;
   font-weight: 600; /* This sets the font weight to semibold */
   font-size: 25px;
@@ -39,7 +39,7 @@
   position: absolute;
   width: 464px; /* Adjust as needed */
   height: 2px; /* Adjust as needed */
-  background-color: white;
+  background-color: black;
   top: 50%;
   left: -460px; /* Adjust as needed */
 }
@@ -49,7 +49,7 @@
   position: absolute;
   width: 370px; /* Adjust as needed */
   height: 2px; /* Adjust as needed */
-  background-color: white;
+  background-color: black;
   top: 50%;
   left: -395px; /* Adjust as needed */
 }
@@ -57,7 +57,7 @@
 @media screen and (max-width: 1024px) {
   .uitleg-text {
     position: absolute;
-    color: white;
+    color: black;
     font-family: "Open Sans", sans-serif;
     font-weight: 600; /* This sets the font weight to semibold */
     font-size: 20px;
