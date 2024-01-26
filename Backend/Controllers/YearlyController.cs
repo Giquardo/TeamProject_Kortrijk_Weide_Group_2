@@ -38,10 +38,6 @@ namespace TeamProject.Controllers
                 var generaloverview = new Dictionary<string, List<string>>
                 {
                     {"Year", new List<string> {
-                        $"from(bucket: \"{bucket}\") |> range(start: -2y, stop: -1y) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Afname$/)",
-                        $"from(bucket: \"{bucket}\") |> range(start: -2y, stop: -1y) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Injectie$/)",
-                        $"from(bucket: \"{bucket}\") |> range(start: -2y, stop: -1y) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_WKK.*/)",
-                        $"from(bucket: \"{bucket}\") |> range(start: -2y, stop: -1y) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_PV.*/)",
                         $"from(bucket: \"{bucket}\") |> range(start: -1y) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Afname$/)",
                         $"from(bucket: \"{bucket}\") |> range(start: -1y) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Injectie$/)",
                         $"from(bucket: \"{bucket}\") |> range(start: -1y) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_WKK.*/)",
@@ -55,52 +51,25 @@ namespace TeamProject.Controllers
                 results["generaloverview"] = new List<object>();
                 foreach (var query in generaloverview)
                 {
-                    var kortrijkWeideTablesAfnameRef = await client.GetQueryApi().QueryAsync(query.Value[0], org);
-                    var kortrijkWeideTablesInjectionRef = await client.GetQueryApi().QueryAsync(query.Value[1], org);
-                    var kortrijkWeideTablesProductionWKKRef = await client.GetQueryApi().QueryAsync(query.Value[2], org);
-                    var kortrijkWeideTablesProductionPVRef = await client.GetQueryApi().QueryAsync(query.Value[3], org);
-                    var kortrijkWeideTablesAfname = await client.GetQueryApi().QueryAsync(query.Value[4], org);
-                    var kortrijkWeideTablesInjection = await client.GetQueryApi().QueryAsync(query.Value[5], org);
-                    var kortrijkWeideTablesProductionWKK = await client.GetQueryApi().QueryAsync(query.Value[6], org);
-                    var kortrijkWeideTablesProductionPV = await client.GetQueryApi().QueryAsync(query.Value[7], org);
+                    var kortrijkWeideTablesAfname = await client.GetQueryApi().QueryAsync(query.Value[0], org);
+                    var kortrijkWeideTablesInjection = await client.GetQueryApi().QueryAsync(query.Value[1], org);
+                    var kortrijkWeideTablesProductionWKK = await client.GetQueryApi().QueryAsync(query.Value[2], org);
+                    var kortrijkWeideTablesProductionPV = await client.GetQueryApi().QueryAsync(query.Value[3], org);
 
-                    double totalAfnameRef = 0;
                     double totalAfname = 0;
-                    double totalProductionRef = 0;
                     double totalProduction = 0;
-                    double totalProductionWKKRef = 0;
                     double totalProductionWKK = 0;
-                    double totalProductionPVRef = 0;
                     double totalProductionPV = 0;
-                    double totalInjectionRef = 0;
                     double totalInjection = 0;
-                    double totalConsumptionRef = 0;
                     double totalConsumption = 0;
-
-                    foreach (var table in kortrijkWeideTablesAfnameRef)
-                    {
-                        foreach (var record in table.Records)
-                        {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
-                            totalAfnameRef += value;
-                        }
-                    }
+                    double totalEigenVerbruik = 0;
 
                     foreach (var table in kortrijkWeideTablesAfname)
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
                             totalAfname += value;
-                        }
-                    }
-
-                    foreach (var table in kortrijkWeideTablesInjectionRef)
-                    {
-                        foreach (var record in table.Records)
-                        {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
-                            totalInjectionRef += value;
                         }
                     }
 
@@ -108,17 +77,8 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
                             totalInjection += value;
-                        }
-                    }
-
-                    foreach (var table in kortrijkWeideTablesProductionWKKRef)
-                    {
-                        foreach (var record in table.Records)
-                        {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
-                            totalProductionWKKRef += value;
                         }
                     }
 
@@ -126,17 +86,8 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
                             totalProductionWKK += value;
-                        }
-                    }
-
-                    foreach (var table in kortrijkWeideTablesProductionPVRef)
-                    {
-                        foreach (var record in table.Records)
-                        {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
-                            totalProductionPVRef += value;
                         }
                     }
 
@@ -144,40 +95,39 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
                             totalProductionPV += value;
                         }
                     }
 
-                    totalAfnameRef = Math.Round(totalAfnameRef, 2);
+                   
+                    //afname
                     totalAfname = Math.Round(totalAfname, 2);
-                    totalInjectionRef = Math.Round(totalInjectionRef, 2);
+                    //injectie
                     totalInjection = Math.Round(totalInjection, 2);
-                    totalProductionWKKRef = Math.Round(totalProductionWKKRef, 2);
-                    totalProductionPVRef = Math.Round(totalProductionPVRef, 2);
+                    //productie
                     totalProductionWKK = Math.Round(totalProductionWKK, 2);
                     totalProductionPV = Math.Round(totalProductionPV, 2);
-                    totalProductionRef = Math.Round(totalProductionWKKRef + totalProductionPVRef, 2);
                     totalProduction = Math.Round(totalProductionWKK + totalProductionPV, 2);
-                    totalConsumptionRef = Math.Round(totalAfnameRef + (totalProductionRef - totalInjectionRef), 2);
+                    //consumptie
                     totalConsumption = Math.Round(totalAfname + (totalProduction - totalInjection), 2);
+                    //eigen verbruik
+                    totalEigenVerbruik = Math.Round(totalProduction - totalInjection, 2);
 
                     var data = new
                     {
                         Period = query.Key,
-                        ReferenceConsumption = totalConsumptionRef.ToString("N2"),
-                        Consumption = totalConsumption.ToString("N2"),
-                        ReferenceProduction = totalProductionRef.ToString("N2"),
-                        Production = totalProduction.ToString("N2"),
-                        ReferenceInjection = totalInjectionRef.ToString("N2"),
-                        Injection = totalInjection.ToString("N2")
+                        Consumption = totalConsumption.ToString("N0"),
+                        Production = totalProduction.ToString("N0"),
+                        Injection = totalInjection.ToString("N0"),
+                        EigenVerbruik = totalEigenVerbruik.ToString("N0")
                     };
 
                     results["generaloverview"].Add(data);
                 }
                 return Ok(new
                 {
-                    productionoverview = results["generaloverview"]
+                    generaloverview = results["generaloverview"]
                 });
             }
             catch (Exception ex)
@@ -224,7 +174,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
                             totalProduction_WKK += value;
                         }
                     }
@@ -233,7 +183,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
                             totalProduction_PV += value;
                         }
                     }
@@ -242,7 +192,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"));
+                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
                             totalInjection += value;
                         }
                     }
@@ -252,7 +202,15 @@ namespace TeamProject.Controllers
                     totalProduction = Math.Round(totalProduction_WKK + totalProduction_PV, 2);
                     totalInjection = Math.Round(totalInjection, 2);
 
-                    var data = new { Period = query.Key, Production_WKK = totalProduction_WKK, Production_PV = totalProduction_PV, Production_Total = totalProduction, Injection = totalInjection };
+                    var data = new
+                    {
+                        Period = query.Key,
+                        Production_WKK = totalProduction_WKK.ToString("N0"),
+                        Production_PV = totalProduction_PV.ToString("N0"),
+                        Production_Total = totalProduction.ToString("N0"),
+                        Injection = totalInjection.ToString("N0")
+                    };
+
 
                     results["productionoverview"].Add(data);
                 }
