@@ -10,11 +10,11 @@
 }
 
 .energie-image {
-  max-width: 80%;
+  max-width: 55%;
   max-height: 70%;
   object-fit: contain;
   align-self: center;
-  margin-right: 350px;
+  margin-right: 560px;
   z-index: 1;
 }
 
@@ -23,73 +23,13 @@
   right: 0; /* Align it to the right of the container */
   top: 5%; /* Position it around the middle of the container, adjust as needed */
   width: 50%; /* Take up half the width of the container */
-  color: white; /* Set the text color to white */
+  color: black; /* Set the text color to white */
   font-family: "Open Sans", sans-serif;
   font-weight: 600; /* This sets the font weight to semibold */
   font-size: 25px; /* Set the font size */
   z-index: 2; /* Make sure it's above the image */
   padding-right: 20px;
   text-align: left;
-}
-
-.value-type,
-.value {
-  margin: 5px; /* Add a little space */
-  padding: 0; /* Remove padding */
-}
-
-.value-type {
-  color: white;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-}
-
-.value {
-  color: #e6007e;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 700;
-  font-size: 45px;
-}
-
-.circles {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  right: 0;
-  top: 30%; /* Adjust this value as needed to position the circles underneath the description */
-  width: 50%;
-  height: auto;
-}
-
-.circle-container {
-  display: flex;
-  justify-content: center;
-}
-
-.circle {
-  border: 8px solid white;
-  border-radius: 50%;
-  width: 260px;
-  height: 260px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin: 12px;
-  margin-top: 0px;
-}
-
-.circle:nth-child(1) {
-  margin-bottom: -20px;
-}
-
-.circle:last-child {
-  margin-top: auto;
-  overflow: auto;
-  margin-bottom: -20px;
 }
 
 @media screen and (max-width: 1024px) {
@@ -118,45 +58,5 @@
     right: 0;
     padding: 0 16px;
     text-align: center;
-  }
-
-  .circles {
-    position: relative;
-    width: 100%;
-    height: auto;
-    top: 0;
-    right: 0;
-    padding: 0 16px;
-    text-align: center;
-    flex-direction: row;
-  }
-
-  .circle-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .circle {
-    width: 150px;
-    height: 150px;
-    margin: 8px;
-  }
-
-  .circle:last-child {
-    margin-top: 0;
-  }
-
-  .value {
-    color: white;
-    font-family: "Open Sans", sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-  }
-
-  .value-type {
-    color: white;
-    font-family: "Open Sans", sans-serif;
-    font-weight: 700;
-    font-size: 15px;
   }
 }
