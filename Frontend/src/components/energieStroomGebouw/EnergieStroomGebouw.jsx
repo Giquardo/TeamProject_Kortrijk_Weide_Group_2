@@ -107,7 +107,16 @@ const EnergieStroomGebouw = ({ info }) => {
   const realtimeProduction = data?.liveData.find(
     (item) => item.type === "Realtime" && item.building === info.productionId.toString()
   );
-  
+
+  // If consumption is negative, add its absolute value to production
+  if (realtimeConsumption && realtimeConsumption.value < 0) {
+    if (realtimeProduction) {
+      realtimeProduction.value = parseFloat(realtimeProduction.value) + Math.abs(parseFloat(realtimeConsumption.value));
+    } else {
+      realtimeProduction = { value: Math.abs(parseFloat(realtimeConsumption.value)).toString() };
+    }
+    realtimeConsumption.value = "0";
+  }
 
   return (
     <div className="energie-stroom-gebouw-container">
