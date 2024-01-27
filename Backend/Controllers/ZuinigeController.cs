@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
+using System.Linq;
 
 namespace TeamProject.Controllers
 {
@@ -36,13 +37,20 @@ namespace TeamProject.Controllers
 
             using var client = InfluxDBClientFactory.Create("http://howest-energy-monitoring.westeurope.cloudapp.azure.com:8087", token);
 
+            // Include all buildings
+            List<string> buildingNames = new List<string> { "KWE_A", "KWE_P", "VEG_I_TEC", "LAGO", "Hangar_K", "JC_Tranzit", "MC_Track", "Salie_Tricolor" };
+
+            // Convert the list of building names to a regex pattern
+            string buildingNamesPattern = string.Join("|", buildingNames.Select(name => $"{name}"));
+
             // Zuinige Overview Queries
             var zuinigeoverview = new Dictionary<string, List<string>>
             {
-                {"Week", new List<string> {
-                    $"from(bucket: \"{bucket}\") |> range(start: -1y) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_{soort}$/) |> aggregateWindow(every: 1mo, fn: sum, createEmpty: false)"
+                {soort, new List<string> {
+                    $"from(bucket: \"{bucket}\") |> range(start: -1y) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /({buildingNamesPattern})_Productie_{soort}$/) |> aggregateWindow(every: 1mo, fn: sum, createEmpty: false)"
                 }}
             };
+
             var results = new Dictionary<string, Dictionary<string, double>>();
 
             // Zuinige Overview
@@ -57,7 +65,7 @@ namespace TeamProject.Controllers
                     {
                         var time = DateTime.Parse(record.GetValueByKey("_time").ToString());
                         var month = time.ToString("MMMM");
-                        var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+                        var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
 
                         if (results["zuinigeoverview"].ContainsKey(month))
                         {

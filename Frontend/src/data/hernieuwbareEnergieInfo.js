@@ -1,7 +1,6 @@
 import warmtenet from '../Images/HernieuwbareEnergie/warmtenet_gif.gif';
 import wkk from '../Images/HernieuwbareEnergie/wkk_gif.gif';
 import zonneenergie from '../Images/HernieuwbareEnergie/zonneenergie_gif.gif';
-import wkk2 from '../Images/HernieuwbareEnergie/wkk_gif (1).gif';
 const hernieuwbareEnergieInfo = [
   {
     id: 1,

@@ -18,6 +18,7 @@ import hernieuwbareEnergieInfo from "./data/hernieuwbareEnergieInfo.js";
 import EndScreen from "./components/endScreen/EndScreen.jsx";
 import BottomBar from "./components/bottomBar/BottomBar.jsx";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
+import Background from "./components/background/Background.jsx";
 
 const routes = [
   { path: "/totaaloverzicht", element: <EnergieVerbruikTotaalOverzicht /> },
@@ -85,6 +86,7 @@ function App() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <header className="App-header">
+        <Background />
         <ProgressBar progress={progress} />
         <Routes>
           <Route

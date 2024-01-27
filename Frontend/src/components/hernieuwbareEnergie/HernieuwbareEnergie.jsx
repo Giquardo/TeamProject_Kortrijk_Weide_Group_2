@@ -9,7 +9,7 @@ const HernieuwbareEnergie = ({ info }) => {
   useEffect(() => {
     fetch(`http://localhost:5000/api/zuinigedata/zuinigeoverview/${info.naam}`)
       .then((response) => response.json())
-      .then((data) => setData(data.zuinigeoverview[0]))
+      .then((data) => setData(data.zuinigeoverview))
       .catch((error) => console.error("Error:", error));
   }, [info.naam]);
 
@@ -25,20 +25,7 @@ const HernieuwbareEnergie = ({ info }) => {
       },
     },
     xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Maart",
-        "Apr",
-        "Mei",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Okt",
-        "Nov",
-        "Dec",
-      ],
+      categories: data ? data.map((item) => item.month) : [],
       labels: {
         style: {
           colors: ["#000000"],
@@ -62,7 +49,7 @@ const HernieuwbareEnergie = ({ info }) => {
     },
     colors: ["#e6007e"],
     dataLabels: {
-      enabled: true,
+      enabled: false,
       textAnchor: "start", // Position the labels next to the bars
       style: {
         colors: ["#000000"],
@@ -74,10 +61,8 @@ const HernieuwbareEnergie = ({ info }) => {
   const series = data
     ? [
         {
-          name: "Productie per maand",
-          data: data
-            .filter((item) => item.type === "Data")
-            .map((item) => item.consumption),
+          name: "Maandelijkse productie",
+          data: data.map((item) => parseFloat(item.production)),
         },
       ]
     : [];
@@ -87,7 +72,6 @@ const HernieuwbareEnergie = ({ info }) => {
       <div className="hernieuwbareEnergie-container">
         <h1 className="title title_extra">{info.title}</h1>
         <p className="hernieuwbareEnergie-description">{info.description}</p>
-        {/* Add this line */}
         <img className="energie-image" src={info.image} alt={info.imageAlt} />
         <div className="chart-container">
           <Chart

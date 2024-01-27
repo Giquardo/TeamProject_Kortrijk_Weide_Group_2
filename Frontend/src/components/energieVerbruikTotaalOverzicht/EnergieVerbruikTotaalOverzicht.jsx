@@ -4,17 +4,22 @@ import overzicht from "../../Images/TotaalOverzicht.png";
 import Lottie from "lottie-react";
 import powerline from "../../animations/power_line.json";
 import "../General.css";
-import Background from "../backgroundTotaalOVerzicht/Background";
+import Background from "../background/Background";
 
 const TotaalOverzicht = () => {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    // Replace with your HTTP trigger
-    fetch("http://localhost:5000/api/weeklydata/generaloverview")
+    fetch("http://localhost:5000/api/PeriodData/generaloverview/weekly")
       .then((response) => response.json())
-      .then((data) => setData(data.productionoverview[0])); // Access the first object in the array
-    console.log(data);
+      .then((data) => {
+        if (Array.isArray(data.generaloverview) && data.generaloverview.length > 0) {
+          setData(data.generaloverview[0]);
+        } else {
+          console.error('generaloverview is not an array or it\'s empty:', data);
+        }
+      })
+      .catch((error) => console.error("Error:", error));
   }, []);
 
   return (

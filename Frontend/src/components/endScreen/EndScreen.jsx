@@ -9,7 +9,7 @@ import lago3 from "../../Images/Logo/lago logo 3.png";
 import kortrijk from "../../Images/Logo/02_Kortrijk-logo-web_WIT-pos.png";
 import westvlaanderen from "../../Images/Logo/West-Vlaanderen.png";
 import ugent from "../../Images/Logo/logo_UGent_CK_NL_RGB_2400_wit.png";
-import Background from "../backgroundTotaalOVerzicht/Background";
+import Background from "../background/Background";
 
 const EndScreen = () => {
   return (

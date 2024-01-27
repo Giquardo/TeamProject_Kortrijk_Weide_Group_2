@@ -36,7 +36,7 @@ namespace TeamProject.Controllers
                 // Queries
                 var queries = new Dictionary<string, string>
                 {
-                    {"hour", $"from(bucket: \"{bucket}\") |> range(start: -1h) |> filter(fn: (r) => r[\"_measurement\"] == \"Electricity\" and (r[\"msr_subject\"] == \"Building\" or r[\"msr_subject\"] == \"PV\" or r[\"msr_subject\"] == \"WKK\") and r[\"building\"] == \"{buildingName}\") |> sort(columns: [\"_time\"], desc: true) |> limit(n: 1)"},
+                    {"hour", $"from(bucket: \"{bucket}\") |> range(start: -5h) |> filter(fn: (r) => r[\"_measurement\"] == \"Electricity\" and (r[\"msr_subject\"] == \"Building\" or r[\"msr_subject\"] == \"PV\" or r[\"msr_subject\"] == \"WKK\") and r[\"building\"] == \"{buildingName}\") |> sort(columns: [\"_time\"], desc: true) |> limit(n: 1)"},
                 };
 
                 var results = new Dictionary<string, Dictionary<string, List<object>>>();
