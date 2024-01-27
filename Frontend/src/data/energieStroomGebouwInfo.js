@@ -49,13 +49,6 @@ const energieStroomGebouwInfo = [
     consumptionId: 0,
   },
   {
-    id: ['MC_Track'],
-    name: 'MC Track',
-    image: hangar,
-    productionId: 0,
-    consumptionId: 0,
-  },
-  {
     id: ['Salie_Tricolor'],
     name: 'Salie Tricolor',
     image: hangar,
