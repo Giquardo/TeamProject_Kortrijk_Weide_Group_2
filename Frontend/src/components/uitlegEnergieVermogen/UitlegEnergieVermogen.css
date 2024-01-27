@@ -1,0 +1,85 @@
+.uitleg-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  max-width: 100%;
+}
+
+.uitleg-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.uitleg-text {
+  position: absolute;
+  color: black;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600; /* This sets the font weight to semibold */
+  font-size: 25px;
+}
+
+.uitleg-text1 {
+  top: 75%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+}
+
+.uitleg-text2 {
+  top: 55%;
+  left: 76%;
+  transform: translate(-50%, -50%);
+}
+
+.uitleg-text1::before {
+  content: "";
+  position: absolute;
+  width: 464px; /* Adjust as needed */
+  height: 2px; /* Adjust as needed */
+  background-color: black;
+  top: 50%;
+  left: -460px; /* Adjust as needed */
+}
+
+.uitleg-text2::before {
+  content: "";
+  position: absolute;
+  width: 370px; /* Adjust as needed */
+  height: 2px; /* Adjust as needed */
+  background-color: black;
+  top: 50%;
+  left: -395px; /* Adjust as needed */
+}
+
+@media screen and (max-width: 1024px) {
+  .uitleg-text {
+    position: absolute;
+    color: black;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600; /* This sets the font weight to semibold */
+    font-size: 20px;
+  }
+
+  .uitleg-text1::before {
+    content: "";
+    position: absolute;
+    width: 150px; /* Adjust as needed */
+    height: 2px; /* Adjust as needed */
+    background-color: white;
+    top: 15%;
+    left: -210px; /* Adjust as needed */
+  }
+
+  .uitleg-text2::before {
+    content: "";
+    position: absolute;
+    width: 260px; /* Adjust as needed */
+    height: 2px; /* Adjust as needed */
+    background-color: white;
+    top: 40%;
+    left: -280px; /* Adjust as needed */
+  }
+}
