@@ -1,0 +1,134 @@
+.energie-stroom-gebouw-container {
+  flex-direction: horizontal;
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  height: 100vh;
+  max-width: 100%;
+}
+
+.building-image {
+  width: 65%;
+  height: auto;
+}
+
+.building-title {
+  text-align: center;
+  color: black;
+  font-family: "VAG Rounded Light";
+  font-size: 48px;
+  margin-top: 20px;
+}
+
+.building-container {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 35%;
+  width: 50%;
+}
+
+.energiestroom-circle-container {
+  position: absolute;
+  right: 140px;
+  top: 100px;
+  display: flex;
+  flex-direction: horizontal;
+  gap: 20px;
+}
+
+.energiestroom-circle {
+  border: 8px solid black;
+  border-radius: 50%;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-direction: horizontal;
+  margin: 12px;
+  font-family: "Open Sans", sans-serif;
+  color: black;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.circle-variable {
+  margin-top: 10px;
+  color: #e6007e;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: 45px;
+}
+
+.energiestroom-info-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Stack elements vertically */
+}
+
+.chart-container {
+  position: fixed;
+  top: 50%;
+  left: 15%;
+  width: 100%; /* Take up full width of parent */
+  display: flex;
+  justify-content: center; /* Center chart horizontally */
+}
+
+@media screen and (max-width: 1024px) {
+  .circle-variable {
+    color: black;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 25px;
+  }
+
+  .energiestroom-circle {
+    color: black;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    width: 150px;
+    height: 150px;
+    margin: 8px;
+  }
+
+  .energiestroom-circle-container {
+    position: absolute;
+    left: 30%;
+    display: flex;
+    flex-direction: horizontal;
+    gap: 20px;
+  }
+
+  .building-image {
+    width: 50%;
+    height: auto;
+  }
+
+  .building-container {
+    position: absolute;
+    z-index: 1;
+    left: 10%;
+    top: 30%;
+  }
+
+  .building-title {
+    text-align: center;
+    color: black;
+    font-family: "VAG Rounded Light";
+    font-size: 30px;
+  }
+
+  .chart-container {
+    position: fixed;
+    top: 60%;
+    left: 2.5%;
+    width: 100%; /* Take up full width of parent */
+    display: flex;
+    justify-content: center;
+  }
+}

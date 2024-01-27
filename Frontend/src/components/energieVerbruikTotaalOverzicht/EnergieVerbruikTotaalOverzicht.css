@@ -1,0 +1,63 @@
+.overzicht-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  max-width: 100%;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.textbox {
+  position: absolute;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600; /* This sets the font weight to semibold */
+  font-size: 40px;
+}
+
+.textbox1 {
+  top: 25%;
+  left: 37.5%;
+}
+
+.textbox2 {
+  top: 70%;
+  left: 15%;
+}
+
+.textbox3 {
+  top: 70%;
+  left: 65%;
+}
+
+@media screen and (max-width: 1024px) {
+  .textbox {
+    position: absolute;
+    color: white;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600; /* This sets the font weight to semibold */
+    font-size: 30px;
+  }
+
+  .textbox1 {
+    top: 20%;
+    left: 37.5%;
+  }
+
+  .textbox2 {
+    top: 65%;
+    left: 15%;
+  }
+
+  .textbox3 {
+    top: 60%;
+    left: 65%;
+  }
+}
