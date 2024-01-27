@@ -6,13 +6,13 @@ const EnergieStroomGebouw = ({ info }) => {
   const [data, setData] = useState(null);
   const [isLoadingConsumption, setIsLoadingConsumption] = useState(true);
   const [isLoadingProduction, setIsLoadingProduction] = useState(true);
-
+  let id = Array.isArray(info.id) ? info.id.map(i => i.toUpperCase()) : info.id.toUpperCase();
   useEffect(() => {
     setIsLoadingConsumption(true);
     setIsLoadingProduction(true);
     Promise.all([
       fetch(`http://localhost:5000/api/Buildingdata/buildingspecific/${info.id}`),
-      fetch(`http://localhost:5000/api/LiveData/Liveoverview/${info.id}/${info.productionId}/${info.consumptionId}`),
+      fetch(`http://localhost:5000/api/LiveData/Liveoverview/${id}/${info.productionId}/${info.consumptionId}`),
     ])
       .then(async ([buildingRes, liveRes]) => {
         const buildingData = await buildingRes.json();
@@ -128,7 +128,7 @@ const EnergieStroomGebouw = ({ info }) => {
               {isLoadingConsumption
                 ? "Loading..."
                 : realtimeConsumption
-                ? `${realtimeConsumption.value} kWh`
+                ? `${realtimeConsumption.value} kW`
                 : "Geen data"}
             </div>
           </div>
@@ -138,7 +138,7 @@ const EnergieStroomGebouw = ({ info }) => {
               {isLoadingProduction
                 ? "Loading..."
                 : realtimeProduction
-                ? `${Math.abs(realtimeProduction.value)} kWh`
+                ? `${Math.abs(realtimeProduction.value)} kW`
                 : "Geen data"}
             </div>
           </div>

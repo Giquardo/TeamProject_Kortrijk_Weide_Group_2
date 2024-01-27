@@ -57,7 +57,7 @@ namespace TeamProject.Controllers
                             var timestamp = TimeZoneInfo.ConvertTimeFromUtc(timestampUtc, brusselsTimeZone);
 
                             var valueObject = record.GetValueByKey("_value");
-                            var value = Math.Round(Convert.ToDouble(valueObject) / 4, 2); // Adjusted the value to be divided by 4
+                            var value = Math.Round(Convert.ToDouble(valueObject), 2); // Adjusted the value to be divided by 4
 
                             // Get the msr_ID value
                             var msrIDObject = record.GetValueByKey("msr_ID");

@@ -22,7 +22,7 @@ const energieStroomGebouwInfo = [
   },
   {
     id: 'VEG_i_TEC',
-    name: 'VEG-i-TEC',
+    name: 'VEG-I-TEC',
     image: vegitec,
     productionId: 361,
     consumptionId: 362,
@@ -43,7 +43,7 @@ const energieStroomGebouwInfo = [
   },
   {
     id: ['JC_Tranzit'],
-    name: 'JC Tanzit',
+    name: 'JC Tranzit',
     image: hangar,
     productionId: 0,
     consumptionId: 0,
