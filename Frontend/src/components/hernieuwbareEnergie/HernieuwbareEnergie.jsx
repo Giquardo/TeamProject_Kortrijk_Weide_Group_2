@@ -25,7 +25,7 @@ const HernieuwbareEnergie = ({ info }) => {
       },
     },
     xaxis: {
-      categories: data ? data.map((item) => item.month) : [],
+      categories: data ? data.map((item) => item.monthYear) : [],
       labels: {
         style: {
           colors: ["#000000"],

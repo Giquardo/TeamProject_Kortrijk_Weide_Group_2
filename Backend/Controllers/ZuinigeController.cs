@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
 using System.Linq;
+using System.Globalization;
+
 
 namespace TeamProject.Controllers
 {
@@ -64,28 +66,28 @@ namespace TeamProject.Controllers
                     foreach (var record in table.Records)
                     {
                         var time = DateTime.Parse(record.GetValueByKey("_time").ToString());
-                        var month = time.ToString("MMMM");
+                        var monthYear = time.ToString("MMMM yyyy"); // Use both month and year as the key
                         var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
 
-                        if (results["zuinigeoverview"].ContainsKey(month))
+                        if (results["zuinigeoverview"].ContainsKey(monthYear))
                         {
-                            results["zuinigeoverview"][month] += value;
+                            results["zuinigeoverview"][monthYear] += value;
                         }
                         else
                         {
-                            results["zuinigeoverview"].Add(month, value);
+                            results["zuinigeoverview"].Add(monthYear, value);
                         }
                     }
                 }
             }
 
             var output = new List<object>();
-            foreach (var item in results["zuinigeoverview"])
+            foreach (var item in results["zuinigeoverview"].OrderBy(i => DateTime.ParseExact(i.Key, "MMMM yyyy", CultureInfo.InvariantCulture)))
             {
                 output.Add(new
                 {
                     Type = soort,
-                    Month = item.Key,
+                    MonthYear = item.Key, // Use MonthYear instead of Month
                     Production = Math.Round(item.Value).ToString("N0")
                 });
             }
