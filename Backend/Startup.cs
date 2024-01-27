@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System;
 
 public class Startup
 {
@@ -15,10 +16,26 @@ public class Startup
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(env.ContentRootPath)
-            .AddJsonFile("appsettings.local.json", optional: false, reloadOnChange: true)
             .AddEnvironmentVariables();
 
         Configuration = builder.Build();
+
+        LoadEnvironmentVariablesFromEnvFile();
+    }
+
+    private void LoadEnvironmentVariablesFromEnvFile()
+    {
+        var envFile = ".env";
+        if (!File.Exists(envFile)) return;
+
+        var lines = File.ReadAllLines(envFile);
+        foreach (var line in lines)
+        {
+            var parts = line.Split('=', StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length != 2) continue;
+
+            Environment.SetEnvironmentVariable(parts[0], parts[1]);
+        }
     }
 
     public IConfiguration Configuration { get; }
