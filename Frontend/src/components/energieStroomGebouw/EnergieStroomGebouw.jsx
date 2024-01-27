@@ -12,34 +12,31 @@ const EnergieStroomGebouw = ({ info }) => {
     setIsLoadingProduction(true);
     Promise.all([
       fetch(`http://localhost:5000/api/Buildingdata/buildingspecific/${info.id}`),
-      fetch(`http://localhost:5000/api/LiveData/Liveoverview/${info.id}`),
+      fetch(`http://localhost:5000/api/LiveData/Liveoverview/${info.id}/${info.productionId}/${info.consumptionId}`),
     ])
       .then(async ([buildingRes, liveRes]) => {
         const buildingData = await buildingRes.json();
         let liveData = await liveRes.json();
   
-        liveData = Object.values(liveData.liveoverview).flatMap(
-          (buildingData) =>
-            Object.entries(buildingData).flatMap(([building, data]) =>
-              data.map((item) => ({ ...item, building }))
-            )
-        );
+        liveData = Object.entries(liveData.liveoverview)
+          .flatMap(([id, data]) => data.map(item => ({ ...item, building: id })));
   
         const combinedData = {
-        buildingspecificoverview: buildingData.buildingspecificoverview,
-        dailyLastMonth: buildingData.dailyLastMonth,
-        liveData: liveData,
+          buildingspecificoverview: buildingData.buildingspecificoverview,
+          dailyLastMonth: buildingData.dailyLastMonth,
+          liveData: liveData,
         };
         setData(combinedData);
         setIsLoadingConsumption(false);
         setIsLoadingProduction(false);
+        console.log(combinedData); // Corrected here
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         setIsLoadingConsumption(false);
         setIsLoadingProduction(false);
       });
-  }, [info.id]);
+  }, [info.id, info.productionId, info.consumptionId]);
 
   const building = info;
 
@@ -105,10 +102,10 @@ const EnergieStroomGebouw = ({ info }) => {
   : [];
 
   const realtimeConsumption = data?.liveData.find(
-    (item) => item.type === "Realtime" && item.msrExtra === "Consumption"
+    (item) => item.type === "Realtime" && item.building === info.consumptionId.toString()
   );
   const realtimeProduction = data?.liveData.find(
-    (item) => item.type === "Realtime" && item.msrExtra === "Production"
+    (item) => item.type === "Realtime" && item.building === info.productionId.toString()
   );
   
 
@@ -141,7 +138,7 @@ const EnergieStroomGebouw = ({ info }) => {
               {isLoadingProduction
                 ? "Loading..."
                 : realtimeProduction
-                ? `${realtimeProduction.value} kWh`
+                ? `${Math.abs(realtimeProduction.value)} kWh`
                 : "Geen data"}
             </div>
           </div>

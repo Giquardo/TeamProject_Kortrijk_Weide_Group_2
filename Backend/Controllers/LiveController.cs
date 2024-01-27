@@ -23,8 +23,8 @@ namespace TeamProject.Controllers
             _logger = logger;
         }
 
-        [HttpGet("Liveoverview/{buildingName}")]
-        public async Task<IActionResult> GetLiveOverview(string buildingName)
+        [HttpGet("Liveoverview/{buildingName}/{productionId}/{consumptionId}")]
+        public async Task<IActionResult> GetLiveOverview(string buildingName, int productionId, int consumptionId)
         {
             try
             {
@@ -36,11 +36,10 @@ namespace TeamProject.Controllers
                 // Queries
                 var queries = new Dictionary<string, string>
                 {
-                    {"hour", $"from(bucket: \"{bucket}\") |> range(start: -5h) |> filter(fn: (r) => r[\"_measurement\"] == \"Electricity\" and (r[\"msr_subject\"] == \"Building\" or r[\"msr_subject\"] == \"PV\" or r[\"msr_subject\"] == \"WKK\") and r[\"building\"] == \"{buildingName}\") |> sort(columns: [\"_time\"], desc: true) |> limit(n: 1)"},
+                    {"hour", $"from(bucket: \"{bucket}\") |> range(start: -5h) |> filter(fn: (r) => r[\"_measurement\"] == \"Electricity\" and (r[\"msr_ID\"] == \"{productionId}\" or r[\"msr_ID\"] == \"{consumptionId}\") and r[\"building\"] == \"{buildingName}\") |> sort(columns: [\"_time\"], desc: true) |> limit(n: 1)"},
                 };
 
-                var results = new Dictionary<string, Dictionary<string, List<object>>>();
-
+                var results = new Dictionary<string, List<object>>();
                 foreach (var query in queries)
                 {
                     var tables = await client.GetQueryApi().QueryAsync(query.Value, org);
@@ -60,32 +59,25 @@ namespace TeamProject.Controllers
                             var valueObject = record.GetValueByKey("_value");
                             var value = Math.Round(Convert.ToDouble(valueObject) / 4, 2); // Adjusted the value to be divided by 4
 
-                            // Get the msr_extra value
-                            var msrExtraObject = record.GetValueByKey("msr_extra");
-                            var msrExtra = msrExtraObject?.ToString();
+                            // Get the msr_ID value
+                            var msrIDObject = record.GetValueByKey("msr_ID");
+                            var msrID = msrIDObject?.ToString();
 
                             var data = new
                             {
-                                Type = "Realtime",
-                                Period = query.Key,
-                                Value = value.ToString("N0"),
                                 Time = timestamp,
-                                MsrExtra = msrExtra
+                                Value = value.ToString("N0"),
+                                Type = "Realtime",
                             };
 
-                            var key = $"{query.Key}_{timestamp}";
+                            var key = msrID;
 
                             if (!results.ContainsKey(key))
                             {
-                                results[key] = new Dictionary<string, List<object>>();
+                                results[key] = new List<object>();
                             }
 
-                            if (!results[key].ContainsKey(buildingName))
-                            {
-                                results[key][buildingName] = new List<object>();
-                            }
-
-                            results[key][buildingName].Add(data);
+                            results[key].Add(data);
                         }
                     }
                 }
