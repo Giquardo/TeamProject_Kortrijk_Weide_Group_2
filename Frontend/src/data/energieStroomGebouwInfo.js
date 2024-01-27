@@ -26,8 +26,23 @@ const energieStroomGebouwInfo = [
     image: lago,
   },
   {
-    id: ['Hangar_K', 'JC_Tranzit', 'MC_Track', 'Salie_Tricolor'],
-    name: 'Hangar',
+    id: ['Hangar_K'],
+    name: 'Hangar K',
+    image: hangar,
+  },
+  {
+    id: ['JC_Tranzit'],
+    name: 'JC Tanzit',
+    image: hangar,
+  },
+  {
+    id: ['MC_Track'],
+    name: 'MC Track',
+    image: hangar,
+  },
+  {
+    id: ['Salie_Tricolor'],
+    name: 'Salie Tricolor',
     image: hangar,
   },
 ];

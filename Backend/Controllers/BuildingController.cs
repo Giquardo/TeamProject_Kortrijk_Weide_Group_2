@@ -52,12 +52,33 @@ namespace TeamProject.Controllers
                         $"from(bucket: \"{bucket}\") |> range(start: -1y) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie.*/ and r[\"Meter_ID\"] =~ /{buildingName}/)"
                     }}
                 };
+                var dailyLastMonthQuery = $"from(bucket: \"{bucket}\") |> range(start: -1mo) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Afname$/ and r[\"Meter_ID\"] =~ /{buildingName}/) |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)";
 
                 var results = new Dictionary<string, List<object>>();
 
                 // Building-Specific Overview
                 results["buildingspecificoverview"] = new List<object>();
+                results["dailyLastMonth"] = new List<object>();
 
+                var dailyLastMonthTables = await client.GetQueryApi().QueryAsync(dailyLastMonthQuery, org);
+                foreach (var table in dailyLastMonthTables)
+                {
+                    foreach (var record in table.Records)
+                    {
+                        var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
+                        var time = record.GetTime();
+                        if (time.HasValue)
+                        {
+                            var dateTimeOffset = time.Value.ToDateTimeOffset();
+                            var data = new
+                            {
+                                Time = dateTimeOffset,
+                                Value = Math.Round(value, 2) // Round the value to two decimal places                           
+                            };
+                            results["dailyLastMonth"].Add(data);
+                        }
+                    }
+                }
                 foreach (var query in buildingSpecificQueries)
                 {
                     var kortrijkWeideTablesAfname = await client.GetQueryApi().QueryAsync(query.Value[0], org);
@@ -73,7 +94,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+                            var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
                             totalAfname += value;
                         }
                     }
@@ -81,7 +102,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+                            var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
                             totalInjectie += value;
                         }
                     }
@@ -89,15 +110,15 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+                            var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
                             totalProductie += value;
                         }
                     }
-                    
+
                     //Productie
                     totalProductie = Math.Round(totalProductie, 2);
                     //Consumption
-                    totalConsumption = Math.Round(totalAfname + (totalProductie - totalInjectie),2);
+                    totalConsumption = Math.Round(totalAfname + (totalProductie - totalInjectie), 2);
 
                     // For the current period
                     var data = new
@@ -109,10 +130,12 @@ namespace TeamProject.Controllers
                     };
                     results["buildingspecificoverview"].Add(data);
                 }
-    
+
                 return Ok(new
                 {
-                    buildingspecificoverview = results["buildingspecificoverview"]
+                    buildingspecificoverview = results["buildingspecificoverview"],
+                    dailyLastMonth = results["dailyLastMonth"]
+
                 });
             }
             catch (Exception ex)

@@ -11,34 +11,28 @@ const EnergieStroomGebouw = ({ info }) => {
     setIsLoadingConsumption(true);
     setIsLoadingProduction(true);
     Promise.all([
-      fetch(
-        `http://localhost:5000/api/Buildingdata/buildingspecific/${info.id}`
-      ),
+      fetch(`http://localhost:5000/api/Buildingdata/buildingspecific/${info.id}`),
       fetch(`http://localhost:5000/api/LiveData/Liveoverview/${info.id}`),
     ])
       .then(async ([buildingRes, liveRes]) => {
         const buildingData = await buildingRes.json();
         let liveData = await liveRes.json();
-
-        // Flatten the liveData object into an array and add a building property to each data object
+  
         liveData = Object.values(liveData.liveoverview).flatMap(
           (buildingData) =>
             Object.entries(buildingData).flatMap(([building, data]) =>
               data.map((item) => ({ ...item, building }))
             )
         );
-
-        // Combine or process the data as needed
-        const combinedData = [
-          ...buildingData.buildingspecificoverview,
-          ...liveData,
-        ];
+  
+        const combinedData = {
+        buildingspecificoverview: buildingData.buildingspecificoverview,
+        dailyLastMonth: buildingData.dailyLastMonth,
+        liveData: liveData,
+        };
         setData(combinedData);
         setIsLoadingConsumption(false);
         setIsLoadingProduction(false);
-
-        // Print the data
-        console.log(combinedData);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -47,10 +41,8 @@ const EnergieStroomGebouw = ({ info }) => {
       });
   }, [info.id]);
 
-  // Use the info prop directly
   const building = info;
 
-  // Define your chart options and series
   const options = {
     chart: {
       type: "bar",
@@ -63,12 +55,13 @@ const EnergieStroomGebouw = ({ info }) => {
       },
     },
     xaxis: {
-      categories: Array.from({ length: 30 }, (_, i) => (i + 1).toString()),
+      type: 'datetime',
       labels: {
         style: {
           colors: ["#000000"],
           fontSize: "10px",
         },
+        format: 'dd MMM',
       },
     },
     yaxis: {
@@ -87,34 +80,37 @@ const EnergieStroomGebouw = ({ info }) => {
     },
     colors: ["#e6007e"],
     dataLabels: {
-      enabled: true,
-      textAnchor: "middle", // Position the labels next to the bars
+      enabled: false,
+      textAnchor: "middle",
       style: {
         colors: ["#000000"],
         fontSize: "16px",
       },
     },
+    tooltip: {
+      theme: 'dark',
+      style: {
+        colors: ['#000000']
+      }
+    }
   };
 
-  // Use the fetched data to set the data for the chart series
   const series = data
-    ? [
-        {
-          name: "Verbruik per dag",
-          data: data
-            .filter((item) => item.type === "Data")
-            .map((item) => item.consumption),
-        },
-      ]
-    : [];
+  ? [
+      {
+        name: "Verbruik laatste maand",
+        data: data.dailyLastMonth.map((item) => [new Date(item.time), parseFloat(item.value)]),
+      },
+    ]
+  : [];
 
-  // Find the Realtime data for the current building
-  const realtimeConsumption = data?.find(
+  const realtimeConsumption = data?.liveData.find(
     (item) => item.type === "Realtime" && item.msrExtra === "Consumption"
   );
-  const realtimeProduction = data?.find(
+  const realtimeProduction = data?.liveData.find(
     (item) => item.type === "Realtime" && item.msrExtra === "Production"
   );
+  
 
   return (
     <div className="energie-stroom-gebouw-container">

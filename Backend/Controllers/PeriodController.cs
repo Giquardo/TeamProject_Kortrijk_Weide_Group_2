@@ -7,24 +7,25 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
+using System.Linq;
 
 namespace TeamProject.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class WeeklyDataController : ControllerBase
+    public class PeriodDataController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly ILogger<WeeklyDataController> _logger;
+        private readonly ILogger<PeriodDataController> _logger;
 
-        public WeeklyDataController(IConfiguration configuration, ILogger<WeeklyDataController> logger)
+        public PeriodDataController(IConfiguration configuration, ILogger<PeriodDataController> logger)
         {
             _configuration = configuration;
             _logger = logger;
         }
 
-        [HttpGet("generaloverview")]
-        public async Task<IActionResult> GetGeneralOverview()
+        [HttpGet("generaloverview/{timePeriod}")]
+        public async Task<IActionResult> GetGeneralOverview(string timePeriod)
         {
             try
             {
@@ -34,15 +35,41 @@ namespace TeamProject.Controllers
 
                 using var client = InfluxDBClientFactory.Create("http://howest-energy-monitoring.westeurope.cloudapp.azure.com:8087", token);
 
+
+                string range;
+                switch (timePeriod.ToLower())
+                {
+                    case "yearly":
+                        range = "-1y";
+                        break;
+                    case "monthly":
+                        range = "-1mo";
+                        break;
+                    case "weekly":
+                        range = "-1w";
+                        break;
+                    case "daily":
+                        range = "-1d";
+                        break;
+                    default:
+                        return BadRequest(new { message = "Invalid time period. Please enter yearly, monthly, weekly, or daily." });
+                }
+
+                // Include all buildings
+                List<string> buildingNames = new List<string> { "KWE_A", "KWE_P", "VEG_I_TEC", "LAGO", "Hangar_K", "JC_Tranzit", "MC_Track", "Salie_Tricolor" };
+
+                // Convert the list of building names to a regex pattern
+                string buildingNamesPattern = string.Join("|", buildingNames.Select(name => $"{name}"));
+
                 // General Overview Queries
                 var generaloverview = new Dictionary<string, List<string>>
                 {
-                    {"Week", new List<string> {
-                        $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Afname$/)",
-                        $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Injectie$/)",
-                        $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_WKK.*/)",
-                        $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_PV.*/)"
-                    }}
+                    {timePeriod, new List<string> {
+                        $"from(bucket: \"{bucket}\") |> range(start: {range}) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /({buildingNamesPattern})_Afname$/)",
+                        $"from(bucket: \"{bucket}\") |> range(start: {range}) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /({buildingNamesPattern})_Injectie$/)",
+                        $"from(bucket: \"{bucket}\") |> range(start: {range}) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /({buildingNamesPattern})_Productie_WKK.*/) ",
+                        $"from(bucket: \"{bucket}\") |> range(start: {range}) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /({buildingNamesPattern})_Productie_PV.*/)"
+                    }},
                 };
 
                 var results = new Dictionary<string, List<object>>();
@@ -68,7 +95,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+                            var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
                             totalAfname += value;
                         }
                     }
@@ -77,7 +104,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+                            var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
                             totalInjection += value;
                         }
                     }
@@ -86,7 +113,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+                            var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
                             totalProductionWKK += value;
                         }
                     }
@@ -95,7 +122,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+                            var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
                             totalProductionPV += value;
                         }
                     }
@@ -135,8 +162,8 @@ namespace TeamProject.Controllers
             }
         }
 
-        [HttpGet("productionoverview")]
-        public async Task<IActionResult> GetProductionOverview()
+        [HttpGet("productionoverview/{timePeriod}")]
+        public async Task<IActionResult> GetProductionOverview(string timePeriod)
         {
             try
             {
@@ -146,12 +173,36 @@ namespace TeamProject.Controllers
 
                 using var client = InfluxDBClientFactory.Create("http://howest-energy-monitoring.westeurope.cloudapp.azure.com:8087", token);
 
+                string range;
+                switch (timePeriod.ToLower())
+                {
+                    case "yearly":
+                        range = "-1y";
+                        break;
+                    case "monthly":
+                        range = "-1mo";
+                        break;
+                    case "weekly":
+                        range = "-1w";
+                        break;
+                    case "daily":
+                        range = "-1d";
+                        break;
+                    default:
+                        return BadRequest(new { message = "Invalid time period. Please enter yearly, monthly, weekly, or daily." });
+                }
+                // Include all buildings
+                List<string> buildingNames = new List<string> { "KWE_A", "KWE_P", "VEG_I_TEC", "LAGO", "Hangar_K", "JC_Tranzit", "MC_Track", "Salie_Tricolor" };
+
+                // Convert the list of building names to a regex pattern
+                string buildingNamesPattern = string.Join("|", buildingNames.Select(name => $"{name}"));
+
                 // Production Overview Queries
                 var productionoverview = new Dictionary<string, (string, string, string)>
                 {
-                    {"Week", ($"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_WKK.*/)",
-                                $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Productie_PV.*/)",
-                                $"from(bucket: \"{bucket}\") |> range(start: -7d) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /.*_Injectie$/)")}
+                    {timePeriod, ($"from(bucket: \"{bucket}\") |> range(start: {range}) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /({buildingNamesPattern})_Productie_WKK.*/)",
+                    $"from(bucket: \"{bucket}\") |> range(start: {range}) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /({buildingNamesPattern})_Productie_PV.*/)",
+                    $"from(bucket: \"{bucket}\") |> range(start: {range}) |> filter(fn: (r) => r[\"Meter_ID\"] =~ /({buildingNamesPattern})_Injectie$/)")}
                 };
 
                 var results = new Dictionary<string, List<object>>();
@@ -173,7 +224,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+                            var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
                             totalProduction_WKK += value;
                         }
                     }
@@ -182,7 +233,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+                            var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
                             totalProduction_PV += value;
                         }
                     }
@@ -191,7 +242,7 @@ namespace TeamProject.Controllers
                     {
                         foreach (var record in table.Records)
                         {
-                            var value = Convert.ToDouble(record.GetValueByKey("_value"))/4;
+                            var value = Convert.ToDouble(record.GetValueByKey("_value")) / 4;
                             totalInjection += value;
                         }
                     }
