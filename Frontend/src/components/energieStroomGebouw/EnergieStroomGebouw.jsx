@@ -62,6 +62,17 @@ const EnergieStroomGebouw = ({ info }) => {
       },
     },
     yaxis: {
+      title: {
+        text: 'kWh',
+        rotate: 0, // This will make the title horizontal
+        offsetY: 0,
+        offsetX: -8,
+        style: {
+          fontSize: '16px', // Adjust the font size as needed
+          fontFamily: 'Open Sans, sans-serif' // Set the font to Open Sans
+
+        }
+      },
       labels: {
         style: {
           colors: ["#000000"],
