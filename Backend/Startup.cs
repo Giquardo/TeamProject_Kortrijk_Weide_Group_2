@@ -1,3 +1,4 @@
+using dotenv.net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,37 +10,25 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System;
+using System.Collections.Generic;
 
 public class Startup
 {
+    public IConfiguration Configuration { get; }
+
     public Startup(IWebHostEnvironment env)
     {
+        // Load .env file
+        DotEnv.Load();
+
         var builder = new ConfigurationBuilder()
             .SetBasePath(env.ContentRootPath)
-            .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true)
-            .AddEnvironmentVariables();
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+            .AddEnvironmentVariables(); // This will include the .env variables
 
         Configuration = builder.Build();
-
-        LoadEnvironmentVariablesFromEnvFile();
     }
-
-    private void LoadEnvironmentVariablesFromEnvFile()
-    {
-        var envFile = ".env";
-        if (!File.Exists(envFile)) return;
-
-        var lines = File.ReadAllLines(envFile);
-        foreach (var line in lines)
-        {
-            var parts = line.Split('=', StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length != 2) continue;
-
-            Configuration[parts[0]] = parts[1];
-        }
-    }
-
-    public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
