@@ -36,6 +36,9 @@ public class Startup
         services.AddSingleton<IConfiguration>(Configuration);
         services.AddControllers();
 
+        // Use the token from .env file
+        var token = Configuration["TOKEN"];
+
         services.AddCors(options =>
         {
             options.AddPolicy("AllowLocalhost3000",
@@ -43,7 +46,9 @@ public class Startup
                 {
                     builder.WithOrigins("http://localhost:3000")
                            .AllowAnyHeader()
-                           .AllowAnyMethod();
+                           .AllowAnyMethod()
+                           .WithExposedHeaders("Authorization")
+                           .WithHeaders("Authorization", $"Bearer {token}");
                 });
         });
     }
