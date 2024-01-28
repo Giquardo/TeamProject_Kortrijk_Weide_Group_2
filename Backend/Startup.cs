@@ -16,6 +16,7 @@ public class Startup
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables();
 
         Configuration = builder.Build();
@@ -34,7 +35,7 @@ public class Startup
             var parts = line.Split('=', StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length != 2) continue;
 
-            Environment.SetEnvironmentVariable(parts[0], parts[1]);
+            Configuration[parts[0]] = parts[1];
         }
     }
 
