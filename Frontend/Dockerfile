@@ -10,11 +10,17 @@ COPY package*.json ./
 # Install any needed packages specified in package.json
 RUN npm install
 
+# Install serve to run the app
+RUN npm install -g serve
+
 # Bundle app source
 COPY . .
 
-# Make port 3000 available to the outside 
+# Make port 3000 available to the outside (serve defaults to this port)
 EXPOSE 3000
 
-# Start the app
-CMD ["npm", "start"]
+# Build the app
+RUN npm run build
+
+# Serve the app
+CMD ["serve", "-s", "build"]
